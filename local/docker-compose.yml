@@ -2,7 +2,7 @@ version: "3.9"
 services:
   bazinga-db:
     image: postgres_bazinga:v1
-    build: ../../bazingaws2/local
+    build: ../../bazingaws/local
     container_name: "bazinga_db"
     environment:
       - POSTGRES_USER=postgres
