@@ -1,4 +1,4 @@
-package com.bazinga.entity;
+package com.bazinga.entity.enums;
 
 public enum ClasseTF {
     SPY("SPY"),
@@ -11,15 +11,13 @@ public enum ClasseTF {
     HEAVY("HEAVY"),
     SCOUT("SCOUT");
 
+    private String descricao;
+
     ClasseTF(String descricao) {
         this.descricao = descricao;
     }
 
-    private String descricao;
-
     public String getDescricao() {
         return descricao;
     }
-
 }
-

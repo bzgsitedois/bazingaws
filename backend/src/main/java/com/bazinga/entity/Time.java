@@ -1,5 +1,6 @@
 package com.bazinga.entity;
 
+import com.bazinga.entity.enums.Categoria;
 import jakarta.persistence.*;
 
 @Entity

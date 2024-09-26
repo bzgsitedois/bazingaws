@@ -1,4 +1,4 @@
-package com.bazinga.entity;
+package com.bazinga.entity.enums;
 
 public enum Perfil {
 

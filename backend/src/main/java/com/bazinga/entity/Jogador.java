@@ -1,6 +1,11 @@
 package com.bazinga.entity;
 
+import com.bazinga.entity.enums.ClasseTF;
+import com.bazinga.entity.enums.Perfil;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(schema = "seguranca" , name = "jogador")
@@ -18,14 +23,30 @@ public class Jogador {
     @Enumerated(EnumType.STRING)
     private Perfil perfil;
 
+    @ManyToMany
+    @JoinTable(
+            schema = "controle",
+            name = "classe_jogador",
+            joinColumns = @JoinColumn(name = "jogador_id"),
+            inverseJoinColumns = @JoinColumn(name = "classe_id")
+    )
     @Enumerated(EnumType.STRING)
-    private ClasseTF classetf;
+    private Set<ClasseTFEntity> classes = new HashSet<>();
 
     @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
     @JoinColumn(name = "time_id")
     private Time time;
 
     private Boolean liderTime;
+
+
+    public Set<ClasseTFEntity> getClasses() {
+        return classes;
+    }
+
+    public void setClasses(Set<ClasseTFEntity> classes) {
+        this.classes = classes;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -63,13 +84,6 @@ public class Jogador {
         this.perfil = perfil;
     }
 
-    public ClasseTF getClassetf() {
-        return classetf;
-    }
-
-    public void setClassetf(ClasseTF classetf) {
-        this.classetf = classetf;
-    }
 
     public Time getTime() {
         return time;
