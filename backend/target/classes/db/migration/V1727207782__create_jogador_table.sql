@@ -4,7 +4,9 @@ create table if not exists seguranca.jogador(
     email varchar(255) unique ,
     foto_path varchar(255),
     perfil varchar(45),
+    lider_time boolean,
     time_id bigint
+
 );
 
 DO $$
