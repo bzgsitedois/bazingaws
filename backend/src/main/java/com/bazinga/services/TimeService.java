@@ -5,9 +5,12 @@ import com.bazinga.dto.TimeProjectionDTO;
 import com.bazinga.entity.Time;
 import com.bazinga.mapper.TimeMapper;
 import com.bazinga.repository.TimeRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TimeService {
@@ -24,4 +27,9 @@ public class TimeService {
         Optional<Time> time = timeRepository.findTimeWithJogadoresAndCategoriasById(id);
         return time.map(timeMapper::toTimeProjectionDTO);
     }
+
+    public void deleteEntity(Long id) {
+        timeRepository.deleteById(id);
+    }
+
 }

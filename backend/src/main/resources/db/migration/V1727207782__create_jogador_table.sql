@@ -18,6 +18,6 @@ DO $$
                          and constraint_name = 'fk_time')
         THEN
             alter table if exists seguranca.jogador
-                add constraint fk_time foreign key (time_id) references controle.time;
+                add constraint fk_time foreign key (time_id) references controle.time ON DELETE SET NULL;
         END IF;
 END $$;
