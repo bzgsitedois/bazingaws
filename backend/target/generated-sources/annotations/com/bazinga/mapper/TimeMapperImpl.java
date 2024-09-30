@@ -1,5 +1,6 @@
 package com.bazinga.mapper;
 
+import com.bazinga.dto.TimeCreateDTO;
 import com.bazinga.dto.TimeProjectionDTO;
 import com.bazinga.entity.Time;
 import java.util.List;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-29T18:18:44-0300",
+    date = "2024-09-30T01:05:04-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Amazon.com Inc.)"
 )
 @Component
@@ -32,8 +33,25 @@ public class TimeMapperImpl implements TimeMapper {
         nome = time.getNome();
         descricao = time.getDescricao();
 
-        TimeProjectionDTO timeProjectionDTO = new TimeProjectionDTO( id, nome, descricao, jogadoresId, categorias );
+        String foto_path = null;
+
+        TimeProjectionDTO timeProjectionDTO = new TimeProjectionDTO( id, nome, descricao, foto_path, jogadoresId, categorias );
 
         return timeProjectionDTO;
+    }
+
+    @Override
+    public Time toEntity(TimeCreateDTO dto) {
+        if ( dto == null ) {
+            return null;
+        }
+
+        Time time = new Time();
+
+        time.setNome( dto.nome() );
+        time.setDescricao( dto.descricao() );
+        time.setId( dto.id() );
+
+        return time;
     }
 }
