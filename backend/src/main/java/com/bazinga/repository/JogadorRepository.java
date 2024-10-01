@@ -25,4 +25,8 @@ public interface JogadorRepository extends BaseRepository<Jogador> {
     @Transactional
     @Query("UPDATE Jogador u SET u.time.id = null WHERE u.id IN :usuarioIds")
     void removerUsuariosDoTime(@Param("usuarioIds") List<Long> usuarioIds);
+
+    @Query("SELECT j FROM Jogador j WHERE j.liderTime = true AND j.time.id = :timeId")
+    List<Jogador> findLideresDeTimeByTimeId(@Param("timeId") Long timeId);
+
 }

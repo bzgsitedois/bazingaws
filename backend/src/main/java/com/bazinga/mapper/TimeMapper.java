@@ -1,15 +1,13 @@
 package com.bazinga.mapper;
 
 import com.bazinga.dto.TimeCreateDTO;
+import com.bazinga.dto.TimeListAllDTO;
 import com.bazinga.dto.TimeProjectionDTO;
 import com.bazinga.entity.CategoriaEntity;
 import com.bazinga.entity.Jogador;
 import com.bazinga.entity.Time;
-import com.bazinga.repository.CategoriaRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,7 +17,6 @@ import java.util.stream.Collectors;
 @Component
 @Mapper(componentModel = "spring")
 public interface TimeMapper {
-
 
     @Mapping(source = "jogadores", target = "jogadoresId")
     @Mapping(source = "categorias", target = "categorias")
@@ -37,7 +34,16 @@ public interface TimeMapper {
                 .collect(Collectors.toList());
     }
 
-
     @Mapping(target = "categorias", ignore = true)
     Time toEntity(TimeCreateDTO dto);
+
+    default TimeListAllDTO toTimeListAllDTO(Time time, List<String> lideresNomes) {
+        return new TimeListAllDTO(
+                time.getId(),
+                time.getNome(),
+                time.getDescricao(),
+                time.getFotoPath(),
+                lideresNomes
+        );
+    }
 }

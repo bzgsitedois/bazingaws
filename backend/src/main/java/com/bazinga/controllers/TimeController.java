@@ -1,14 +1,14 @@
 package com.bazinga.controllers;
 
-import com.bazinga.dto.TimeCreateDTO;
-import com.bazinga.dto.TimeProjectionDTO;
-import com.bazinga.dto.TimeUpdateDTO;
+import com.bazinga.bases.BasePagination;
+import com.bazinga.dto.*;
 import com.bazinga.entity.CategoriaEntity;
 import com.bazinga.entity.Jogador;
 import com.bazinga.entity.Time;
 import com.bazinga.repository.TimeRepository;
 import com.bazinga.services.TimeService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,5 +63,19 @@ public class TimeController {
     } else {
         return ResponseEntity.notFound().build();
     }
+    }
+
+    @PostMapping(value = "/listAll" , params = {"page", "size"})
+    public ResponseEntity<BasePagination<TimeListAllDTO>> listAll(
+            @RequestParam(defaultValue = "0", required = false) Integer page,
+            @RequestParam(defaultValue = "10", required = false) Integer size,
+            @RequestBody TimeFilter timeFilter,
+            HttpServletRequest request) {
+
+        if (size <= 0) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        return timeService.listAll(page, size, timeFilter, request);
     }
 }
