@@ -13,20 +13,23 @@ import java.util.List;
 
 @Repository
 public interface JogadorRepository extends BaseRepository<Jogador> {
-    @Query("SELECT u FROM Jogador u WHERE u.time.id = :timeId")
+    @Query("SELECT j FROM Jogador j WHERE j.time.id = :timeId")
     List<Jogador> findByTimeId(@Param("timeId") Long timeId);
 
     @Modifying
     @Transactional
-    @Query("UPDATE Jogador u SET u.time.id = :timeId WHERE u.id IN :usuarioIds")
+    @Query("UPDATE Jogador j SET j.time.id = :timeId WHERE j.id IN :usuarioIds")
     void adicionarUsuariosAoTime(@Param("timeId") Long timeId, @Param("usuarioIds") List<Long> usuarioIds);
 
     @Modifying
     @Transactional
-    @Query("UPDATE Jogador u SET u.time.id = null WHERE u.id IN :usuarioIds")
+    @Query("UPDATE Jogador j SET j.time.id = null WHERE j.id IN :usuarioIds")
     void removerUsuariosDoTime(@Param("usuarioIds") List<Long> usuarioIds);
 
     @Query("SELECT j FROM Jogador j WHERE j.liderTime = true AND j.time.id = :timeId")
     List<Jogador> findLideresDeTimeByTimeId(@Param("timeId") Long timeId);
+
+    @Query("SELECT j.id FROM Jogador j WHERE j.time.id is null")
+    List<String> findNomesJogadoresSemTime();
 
 }
