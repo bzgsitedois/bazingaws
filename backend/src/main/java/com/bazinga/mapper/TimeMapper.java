@@ -37,13 +37,14 @@ public interface TimeMapper {
     @Mapping(target = "categorias", ignore = true)
     Time toEntity(TimeCreateDTO dto);
 
-    default TimeListAllDTO toTimeListAllDTO(Time time, List<String> lideresNomes) {
+    default TimeListAllDTO toTimeListAllDTO(Time time, List<String> lideresNomes , int num_jogadores) {
         return new TimeListAllDTO(
                 time.getId(),
                 time.getNome(),
                 time.getDescricao(),
                 time.getFotoPath(),
-                lideresNomes
+                lideresNomes,
+                num_jogadores
         );
     }
 }

@@ -1,28 +1,33 @@
 package com.bazinga.services;
 
-import com.bazinga.dto.JogadorProjectionDTO;
-import com.bazinga.dto.JogadorSemTimeDTO;
-import com.bazinga.dto.TimeDTOs.TimeProjectionDTO;
+import com.bazinga.dto.JogadorDTOs.JogadorCreateDTO;
+import com.bazinga.dto.JogadorDTOs.JogadorProjectionDTO;
+import com.bazinga.dto.JogadorDTOs.JogadorSemTimeDTO;
+import com.bazinga.dto.JogadorDTOs.JogadorUpdateDTO;
+import com.bazinga.dto.TimeDTOs.TimeCreateDTO;
+import com.bazinga.entity.CategoriaEntity;
+import com.bazinga.entity.ClasseTFEntity;
 import com.bazinga.entity.Jogador;
 import com.bazinga.entity.Time;
 import com.bazinga.mapper.JogadorMapper;
+import com.bazinga.repository.ClasseRepository;
 import com.bazinga.repository.JogadorRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class JogadorService {
 
     private final JogadorRepository jogadorRepository;
     private final JogadorMapper jogadorMapper;
-    public JogadorService(JogadorRepository jogadorRepository, JogadorMapper jogadorMapper) {
+    private final ClasseRepository classeRepository;
+
+    public JogadorService(JogadorRepository jogadorRepository, JogadorMapper jogadorMapper, ClasseRepository classeRepository) {
         this.jogadorRepository = jogadorRepository;
         this.jogadorMapper = jogadorMapper;
+        this.classeRepository = classeRepository;
     }
 
     public void atualizarJogadoresDoTime(Time time, List<Long> novosUsuariosIds) {
@@ -65,5 +70,42 @@ public class JogadorService {
         Optional<Jogador> jogador = jogadorRepository.findJogadoresWithClassesById(id);
         return jogador.map(jogadorMapper::toJogadorProjectionDTO);
     }
+
+    public Jogador newEntity(JogadorCreateDTO dto) {
+        Jogador entity = jogadorMapper.toEntity(dto);
+
+        for (Long id : dto.classesId()) {
+            ClasseTFEntity classe = classeRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada com o id: " + id));
+            entity.getClasses().add(classe);
+        }
+
+        return jogadorRepository.save(entity);
+    }
+
+    public Jogador updateEntity(JogadorUpdateDTO dto , Long id){
+        Jogador entity = jogadorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Jogador não encontrado com o id: " + id));
+
+        entity.setNome(dto.nome());
+        entity.setEmail(dto.email());
+        entity.setFotoPath(dto.fotoPath());
+
+        Set<ClasseTFEntity> novasClasses = new HashSet<>();
+        for (Long classeId : dto.classesId()) {
+            ClasseTFEntity classeTF = classeRepository.findById(classeId)
+                    .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada com o id: " + classeId));
+            novasClasses.add(classeTF);
+        }
+        entity.setClasses(novasClasses);
+
+        return jogadorRepository.save(entity);
+
+    }
+
+    public void deleteEntity(Long id) {
+        jogadorRepository.deleteById(id);
+    }
+
 
 }

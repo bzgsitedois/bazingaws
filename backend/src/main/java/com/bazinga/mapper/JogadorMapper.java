@@ -1,9 +1,9 @@
 package com.bazinga.mapper;
 
 
-import com.bazinga.dto.JogadorProjectionDTO;
-import com.bazinga.dto.TimeDTOs.TimeProjectionDTO;
-import com.bazinga.entity.CategoriaEntity;
+import com.bazinga.dto.JogadorDTOs.JogadorCreateDTO;
+import com.bazinga.dto.JogadorDTOs.JogadorProjectionDTO;
+import com.bazinga.dto.TimeDTOs.TimeCreateDTO;
 import com.bazinga.entity.ClasseTFEntity;
 import com.bazinga.entity.Jogador;
 import com.bazinga.entity.Time;
@@ -19,8 +19,11 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface JogadorMapper {
     @Mapping(source = "classes", target = "classes")
+    @Mapping(source = "time.id", target = "time_id")
     JogadorProjectionDTO toJogadorProjectionDTO(Jogador jogador);
 
+    @Mapping(target = "classes", ignore = true)
+    Jogador toEntity(JogadorCreateDTO dto);
 
     default List<Enum> mapClasses(Set<ClasseTFEntity> classes) {
         return classes.stream()

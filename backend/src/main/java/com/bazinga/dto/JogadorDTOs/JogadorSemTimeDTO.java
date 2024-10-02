@@ -1,4 +1,4 @@
-package com.bazinga.dto;
+package com.bazinga.dto.JogadorDTOs;
 
 public record JogadorSemTimeDTO(
         Long id,

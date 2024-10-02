@@ -1,4 +1,4 @@
-package com.bazinga.dto;
+package com.bazinga.dto.JogadorDTOs;
 
 import java.util.List;
 

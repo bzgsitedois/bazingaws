@@ -1,18 +1,20 @@
 package com.bazinga.controllers;
 
 
-import com.bazinga.dto.JogadorProjectionDTO;
-import com.bazinga.dto.JogadorSemTimeDTO;
+import com.bazinga.dto.JogadorDTOs.JogadorCreateDTO;
+import com.bazinga.dto.JogadorDTOs.JogadorProjectionDTO;
+import com.bazinga.dto.JogadorDTOs.JogadorSemTimeDTO;
+import com.bazinga.dto.JogadorDTOs.JogadorUpdateDTO;
 import com.bazinga.dto.TimeDTOs.TimeProjectionDTO;
 import com.bazinga.entity.Jogador;
+import com.bazinga.entity.Time;
 import com.bazinga.repository.JogadorRepository;
 import com.bazinga.services.JogadorService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,5 +48,32 @@ public class JogadorController {
         return ResponseEntity.ok(jogadorDto);
     }
 
+    @PostMapping
+    private ResponseEntity<?> newEntity(@RequestBody @Valid JogadorCreateDTO dto) {
+        jogadorService.newEntity(dto);
+        return new ResponseEntity<>("Jogador Criado", HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    private ResponseEntity<?> updateEntity(@PathVariable Long id, @RequestBody @Valid JogadorUpdateDTO dto) {
+        Jogador jogadorAtualizado = jogadorService.updateEntity(dto,id);
+        if (jogadorAtualizado != null) {
+            return new ResponseEntity<>("Jogador Atualizado", HttpStatus.OK);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping(value = "/{id}")
+    private ResponseEntity<String> delete(@PathVariable Long id) {
+        Optional<JogadorProjectionDTO> entity = jogadorService.findById(id);
+        entity.ifPresentOrElse(
+                e -> jogadorService.deleteEntity(id),
+                () -> {
+                    throw new RuntimeException("Não foi possível encontrar o parâmetro de id: " + id);
+                }
+        );
+        return new ResponseEntity<>("Objeto deletado", HttpStatus.OK);
+    }
 
 }

@@ -144,7 +144,9 @@ public class TimeService {
                     .map(Jogador::getNome)
                     .collect(Collectors.toList());
 
-            return timeMapper.toTimeListAllDTO(time, lideresNomes);
+            int num_jogadores = jogadorRepository.findNumeroJogadoresByTimeId(time.getId());
+
+            return timeMapper.toTimeListAllDTO(time, lideresNomes , num_jogadores);
         }).collect(Collectors.toList());
 
         Page<TimeListAllDTO> dtoPage = new PageImpl<>(timeDtos, pageable, times.getTotalElements());

@@ -7,5 +7,6 @@ public record TimeListAllDTO(
         String nome,
         String descricao,
         String foto_path,
-        List<String> lideres) {
+        List<String> lideres,
+        int num_jogadores) {
 }

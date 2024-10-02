@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,5 +38,6 @@ public interface JogadorRepository extends BaseRepository<Jogador> {
     @Query("SELECT j FROM Jogador j LEFT JOIN FETCH j.classes c WHERE j.id = :id")
     Optional<Jogador> findJogadoresWithClassesById(@Param("id") Long id);
 
-
+    @Query("SELECT COUNT(j) FROM Jogador j WHERE j.time.id = :id")
+    int findNumeroJogadoresByTimeId(@Param("id")Long id);
 }
