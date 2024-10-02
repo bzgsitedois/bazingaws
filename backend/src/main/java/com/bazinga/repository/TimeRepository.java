@@ -19,6 +19,9 @@ public interface TimeRepository extends BaseRepository<Time>{
     @Modifying
     @Query(value = "DELETE FROM controle.categoria_time WHERE categoria_id = :categoriaId", nativeQuery = true)
     void desassociarCategorias(@Param("categoriaId") Long categoriaId);
+
+    @Query("SELECT t.nome FROM Time t JOIN Jogador j ON t.id = j.time.id WHERE j.id = :id")
+    String findNomeDoTimeByJogadorId(@Param("id") Long id);
 }
 
 

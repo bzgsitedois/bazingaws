@@ -1,16 +1,17 @@
 package com.bazinga.controllers;
 
 
-import com.bazinga.dto.JogadorDTOs.JogadorCreateDTO;
-import com.bazinga.dto.JogadorDTOs.JogadorProjectionDTO;
-import com.bazinga.dto.JogadorDTOs.JogadorSemTimeDTO;
-import com.bazinga.dto.JogadorDTOs.JogadorUpdateDTO;
+import com.bazinga.bases.BasePagination;
+import com.bazinga.dto.JogadorDTOs.*;
+import com.bazinga.dto.TimeDTOs.TimeFilter;
+import com.bazinga.dto.TimeDTOs.TimeListAllDTO;
 import com.bazinga.dto.TimeDTOs.TimeProjectionDTO;
 import com.bazinga.entity.Jogador;
 import com.bazinga.entity.Time;
 import com.bazinga.repository.JogadorRepository;
 import com.bazinga.services.JogadorService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -74,6 +75,18 @@ public class JogadorController {
                 }
         );
         return new ResponseEntity<>("Objeto deletado", HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/listAll" , params = {"page", "size"})
+    private ResponseEntity<BasePagination<JogadorListAllDTO>> listAll(@RequestParam(defaultValue = "0", required = false) Integer page,
+  @RequestParam(defaultValue = "10", required = false) Integer size,
+  @RequestBody JogadorFilter jogadorFilter,
+  HttpServletRequest request){
+        if (size <= 0) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        return jogadorService.listAll(page, size, jogadorFilter, request);
     }
 
 }

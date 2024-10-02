@@ -2,8 +2,10 @@ package com.bazinga.mapper;
 
 
 import com.bazinga.dto.JogadorDTOs.JogadorCreateDTO;
+import com.bazinga.dto.JogadorDTOs.JogadorListAllDTO;
 import com.bazinga.dto.JogadorDTOs.JogadorProjectionDTO;
 import com.bazinga.dto.TimeDTOs.TimeCreateDTO;
+import com.bazinga.dto.TimeDTOs.TimeListAllDTO;
 import com.bazinga.entity.ClasseTFEntity;
 import com.bazinga.entity.Jogador;
 import com.bazinga.entity.Time;
@@ -30,4 +32,14 @@ public interface JogadorMapper {
                 .map(ClasseTFEntity::getClasse)
                 .collect(Collectors.toList());
     }
-}
+
+    default JogadorListAllDTO toTimeListAllDTO(Jogador jogador , String timeNome , List<Long> classesIds) {
+        return new JogadorListAllDTO(
+                jogador.getId(),
+                jogador.getNome(),
+                jogador.getFotoPath(),
+                classesIds,
+                timeNome,
+                jogador.getLiderTime()
+        );
+    }}

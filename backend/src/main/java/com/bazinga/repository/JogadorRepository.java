@@ -40,4 +40,7 @@ public interface JogadorRepository extends BaseRepository<Jogador> {
 
     @Query("SELECT COUNT(j) FROM Jogador j WHERE j.time.id = :id")
     int findNumeroJogadoresByTimeId(@Param("id")Long id);
+
+
+
 }
