@@ -29,7 +29,7 @@ public interface JogadorRepository extends BaseRepository<Jogador> {
     @Query("SELECT j FROM Jogador j WHERE j.liderTime = true AND j.time.id = :timeId")
     List<Jogador> findLideresDeTimeByTimeId(@Param("timeId") Long timeId);
 
-    @Query("SELECT j.id FROM Jogador j WHERE j.time.id is null")
-    List<String> findNomesJogadoresSemTime();
+    @Query("SELECT j.id, j.nome FROM Jogador j WHERE j.time.id IS NULL")
+    List<Object[]> findJogadoresSemTime();
 
 }

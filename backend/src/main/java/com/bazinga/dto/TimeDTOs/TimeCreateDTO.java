@@ -1,10 +1,10 @@
-package com.bazinga.dto;
+package com.bazinga.dto.TimeDTOs;
 
 import java.util.List;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-public record TimeUpdateDTO (
+public record TimeCreateDTO (
         @NotEmpty @NotNull @NotBlank
         Long id,
         @NotEmpty @NotNull @NotBlank
@@ -13,7 +13,6 @@ public record TimeUpdateDTO (
         String descricao,
         @NotEmpty @NotNull @NotBlank
         List<Long> categoriaId,
-        List<Long> jogadoresId,
         String foto_path
 ){
 }

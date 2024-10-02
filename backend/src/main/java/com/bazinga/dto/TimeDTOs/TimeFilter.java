@@ -1,6 +1,4 @@
-package com.bazinga.dto;
-
-import java.util.List;
+package com.bazinga.dto.TimeDTOs;
 
 public record TimeFilter(
         String nome,

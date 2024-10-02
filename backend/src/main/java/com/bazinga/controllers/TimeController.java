@@ -1,9 +1,7 @@
 package com.bazinga.controllers;
 
 import com.bazinga.bases.BasePagination;
-import com.bazinga.dto.*;
-import com.bazinga.entity.CategoriaEntity;
-import com.bazinga.entity.Jogador;
+import com.bazinga.dto.TimeDTOs.*;
 import com.bazinga.entity.Time;
 import com.bazinga.repository.TimeRepository;
 import com.bazinga.services.TimeService;
@@ -15,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/time")

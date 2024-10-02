@@ -1,8 +1,8 @@
 package com.bazinga.mapper;
 
-import com.bazinga.dto.TimeCreateDTO;
-import com.bazinga.dto.TimeListAllDTO;
-import com.bazinga.dto.TimeProjectionDTO;
+import com.bazinga.dto.TimeDTOs.TimeCreateDTO;
+import com.bazinga.dto.TimeDTOs.TimeListAllDTO;
+import com.bazinga.dto.TimeDTOs.TimeProjectionDTO;
 import com.bazinga.entity.CategoriaEntity;
 import com.bazinga.entity.Jogador;
 import com.bazinga.entity.Time;

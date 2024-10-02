@@ -1,6 +1,4 @@
-package com.bazinga.dto;
-
-import com.bazinga.entity.Jogador;
+package com.bazinga.dto.TimeDTOs;
 
 import java.util.List;
 

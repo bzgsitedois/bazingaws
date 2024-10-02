@@ -1,4 +1,4 @@
-package com.bazinga.dto;
+package com.bazinga.dto.TimeDTOs;
 
 import java.util.List;
 

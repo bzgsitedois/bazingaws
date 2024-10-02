@@ -2,7 +2,7 @@ package com.bazinga.services;
 
 
 import com.bazinga.bases.BasePagination;
-import com.bazinga.dto.*;
+import com.bazinga.dto.TimeDTOs.*;
 import com.bazinga.entity.CategoriaEntity;
 import com.bazinga.entity.Jogador;
 import com.bazinga.entity.Time;

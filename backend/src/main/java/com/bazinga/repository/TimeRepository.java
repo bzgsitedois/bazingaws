@@ -1,7 +1,6 @@
 package com.bazinga.repository;
 
 import com.bazinga.bases.BaseRepository;
-import com.bazinga.dto.TimeProjectionDTO;
 import com.bazinga.entity.Time;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
