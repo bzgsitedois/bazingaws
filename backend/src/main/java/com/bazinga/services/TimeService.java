@@ -120,7 +120,7 @@ public class TimeService {
 
             if (filter.categoria() != null && !filter.categoria().isEmpty()) {
                 Join<Time, CategoriaEntity> categoriaJoin = root.join("categorias");
-                predicates.add(criteriaBuilder.equal(categoriaJoin.get("nome"), filter.categoria()));
+                predicates.add(criteriaBuilder.equal(categoriaJoin.get("categoria"), filter.categoria()));
             }
 
             if (filter.liderTime() != null && !filter.liderTime().isBlank()) {
