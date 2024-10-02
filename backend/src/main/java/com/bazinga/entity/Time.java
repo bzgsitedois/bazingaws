@@ -19,7 +19,7 @@ public class Time {
 
     private String descricao;
 
-    @ManyToMany
+    @ManyToMany(cascade = {} , fetch = FetchType.LAZY)
     @JoinTable(
             schema = "controle",
             name = "categoria_time",

@@ -23,7 +23,7 @@ public class Jogador {
     @Enumerated(EnumType.STRING)
     private Perfil perfil;
 
-    @ManyToMany
+    @ManyToMany(cascade = {} , fetch = FetchType.LAZY)
     @JoinTable(
             schema = "controle",
             name = "classe_jogador",

@@ -3,6 +3,7 @@ package com.bazinga.repository;
 
 import com.bazinga.bases.BaseRepository;
 import com.bazinga.entity.Jogador;
+import com.bazinga.entity.Time;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface JogadorRepository extends BaseRepository<Jogador> {
@@ -31,5 +33,9 @@ public interface JogadorRepository extends BaseRepository<Jogador> {
 
     @Query("SELECT j.id, j.nome FROM Jogador j WHERE j.time.id IS NULL")
     List<Object[]> findJogadoresSemTime();
+
+    @Query("SELECT j FROM Jogador j LEFT JOIN FETCH j.classes c WHERE j.id = :id")
+    Optional<Jogador> findJogadoresWithClassesById(@Param("id") Long id);
+
 
 }

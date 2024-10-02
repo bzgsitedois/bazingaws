@@ -1,8 +1,11 @@
 package com.bazinga.services;
 
+import com.bazinga.dto.JogadorProjectionDTO;
 import com.bazinga.dto.JogadorSemTimeDTO;
+import com.bazinga.dto.TimeDTOs.TimeProjectionDTO;
 import com.bazinga.entity.Jogador;
 import com.bazinga.entity.Time;
+import com.bazinga.mapper.JogadorMapper;
 import com.bazinga.repository.JogadorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -10,14 +13,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JogadorService {
 
     private final JogadorRepository jogadorRepository;
-
-    public JogadorService(JogadorRepository jogadorRepository) {
+    private final JogadorMapper jogadorMapper;
+    public JogadorService(JogadorRepository jogadorRepository, JogadorMapper jogadorMapper) {
         this.jogadorRepository = jogadorRepository;
+        this.jogadorMapper = jogadorMapper;
     }
 
     public void atualizarJogadoresDoTime(Time time, List<Long> novosUsuariosIds) {
@@ -54,6 +59,11 @@ public class JogadorService {
             jogadores.add(new JogadorSemTimeDTO(id, nome));
         }
         return jogadores;
+    }
+
+    public Optional<JogadorProjectionDTO> findById(long id) {
+        Optional<Jogador> jogador = jogadorRepository.findJogadoresWithClassesById(id);
+        return jogador.map(jogadorMapper::toJogadorProjectionDTO);
     }
 
 }
