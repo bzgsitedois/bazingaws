@@ -1,7 +1,7 @@
-CREATE TABLE IF NOT EXISTS controle.categoria_time (
-    categoria_id BIGINT,
+CREATE TABLE IF NOT EXISTS controle.jogo_time (
+    jogo_id BIGINT,
     time_id BIGINT,
-    PRIMARY KEY (categoria_id, time_id)
+    PRIMARY KEY (jogo_id, time_id)
     );
 
 DO $$
@@ -10,11 +10,11 @@ BEGIN
         SELECT *
         FROM information_schema.table_constraints
         WHERE table_schema = 'controle'
-        AND table_name = 'categoria_time'
-        AND constraint_name = 'fk_categoria'
+        AND table_name = 'jogo_time'
+        AND constraint_name = 'fk_jogo'
     ) THEN
-ALTER TABLE controle.categoria_time
-    ADD CONSTRAINT fk_categoria FOREIGN KEY (categoria_id) REFERENCES controle.categoria(id);
+ALTER TABLE controle.jogo_time
+    ADD CONSTRAINT fk_jogo FOREIGN KEY (jogo_id) REFERENCES controle.jogo(id);
 END IF;
 END $$;
 
@@ -24,10 +24,10 @@ BEGIN
         SELECT *
         FROM information_schema.table_constraints
         WHERE table_schema = 'controle'
-        AND table_name = 'categoria_time'
+        AND table_name = 'jogo_time'
         AND constraint_name = 'fk_time'
     ) THEN
-ALTER TABLE controle.categoria_time
+ALTER TABLE controle.jogo_time
     ADD CONSTRAINT fk_time FOREIGN KEY (time_id) REFERENCES controle.time(id);
 END IF;
 END $$;

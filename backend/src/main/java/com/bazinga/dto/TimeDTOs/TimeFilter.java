@@ -2,7 +2,7 @@ package com.bazinga.dto.TimeDTOs;
 
 public record TimeFilter(
         String nome,
-        String categoria,
+        String jogo,
         String liderTime
 ) {
 

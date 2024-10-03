@@ -8,7 +8,7 @@ public record TimeProjectionDTO(
         String descricao,
         String foto_path,
         List<Long> jogadoresId,
-        List<Enum> categorias
+        List<Enum> jogos
     ) {
 
 }

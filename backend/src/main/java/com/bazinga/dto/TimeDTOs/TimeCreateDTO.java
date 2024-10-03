@@ -12,7 +12,7 @@ public record TimeCreateDTO (
         @NotEmpty @NotNull @NotBlank
         String descricao,
         @NotEmpty @NotNull @NotBlank
-        List<Long> categoriaId,
+        List<Long> jogoId,
         String foto_path
 ){
 }

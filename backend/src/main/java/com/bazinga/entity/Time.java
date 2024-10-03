@@ -1,6 +1,5 @@
 package com.bazinga.entity;
 
-import com.bazinga.entity.enums.Categoria;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -22,12 +21,12 @@ public class Time {
     @ManyToMany(cascade = {} , fetch = FetchType.LAZY)
     @JoinTable(
             schema = "controle",
-            name = "categoria_time",
+            name = "jogo_time",
             joinColumns = @JoinColumn(name = "time_id"),
-            inverseJoinColumns = @JoinColumn(name = "categoria_id")
+            inverseJoinColumns = @JoinColumn(name = "jogo_id")
     )
     @Enumerated(EnumType.STRING)
-    private Set<CategoriaEntity> categorias = new HashSet<>();
+    private Set<JogoEntity> jogos = new HashSet<>();
 
     private String fotoPath;
 
@@ -50,12 +49,12 @@ public class Time {
         this.descricao = descricao;
     }
 
-    public Set<CategoriaEntity> getCategorias() {
-        return categorias;
+    public Set<JogoEntity> getJogos() {
+        return jogos;
     }
 
-    public void setCategorias(Set<CategoriaEntity> categorias) {
-        this.categorias = categorias;
+    public void setJogos(Set<JogoEntity> jogos) {
+        this.jogos = jogos;
     }
 
     public String getFotoPath() {

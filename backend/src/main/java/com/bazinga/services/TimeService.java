@@ -3,11 +3,11 @@ package com.bazinga.services;
 
 import com.bazinga.bases.BasePagination;
 import com.bazinga.dto.TimeDTOs.*;
-import com.bazinga.entity.CategoriaEntity;
+import com.bazinga.entity.JogoEntity;
 import com.bazinga.entity.Jogador;
 import com.bazinga.entity.Time;
 import com.bazinga.mapper.TimeMapper;
-import com.bazinga.repository.CategoriaRepository;
+import com.bazinga.repository.JogoRepository;
 import com.bazinga.repository.JogadorRepository;
 import com.bazinga.repository.TimeRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -36,21 +36,21 @@ import java.util.stream.Collectors;
 public class TimeService {
     private final TimeRepository timeRepository;
     private final TimeMapper timeMapper;
-    private final CategoriaRepository categoriaRepository;
+    private final JogoRepository jogoRepository;
     private final JogadorService jogadorService;
     private final JogadorRepository jogadorRepository;
 
-    public TimeService(TimeRepository timeRepository, TimeMapper timeMapper, CategoriaRepository categoriaRepository, JogadorService jogadorService, JogadorRepository jogadorRepository) {
+    public TimeService(TimeRepository timeRepository, TimeMapper timeMapper, JogoRepository jogoRepository, JogadorService jogadorService, JogadorRepository jogadorRepository) {
 
         this.timeRepository = timeRepository;
         this.timeMapper = timeMapper;
-        this.categoriaRepository = categoriaRepository;
+        this.jogoRepository = jogoRepository;
         this.jogadorService = jogadorService;
         this.jogadorRepository = jogadorRepository;
     }
 
     public Optional<TimeProjectionDTO> findById(long id) {
-        Optional<Time> time = timeRepository.findTimeWithJogadoresAndCategoriasById(id);
+        Optional<Time> time = timeRepository.findTimeWithJogadoresAndJogosById(id);
         return time.map(timeMapper::toTimeProjectionDTO);
     }
 
@@ -61,15 +61,15 @@ public class TimeService {
     public Time newEntity(TimeCreateDTO dto) {
         Time entity = timeMapper.toEntity(dto);
 
-        if (dto.categoriaId() == null || dto.categoriaId().isEmpty()) {
-            throw new IllegalArgumentException("Lista de categorias não pode ser vazia.");
+        if (dto.jogoId() == null || dto.jogoId().isEmpty()) {
+            throw new IllegalArgumentException("Lista de jogos não pode ser vazia.");
         }
 
 
-        for (Long id : dto.categoriaId()) {
-            CategoriaEntity categoria = categoriaRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada com o id: " + id));
-            entity.getCategorias().add(categoria);
+        for (Long id : dto.jogoId()) {
+            JogoEntity jogo = jogoRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Jogo não encontrada com o id: " + id));
+            entity.getJogos().add(jogo);
         }
 
         return timeRepository.save(entity);
@@ -84,17 +84,17 @@ public class TimeService {
             entity.setDescricao(dto.descricao());
             entity.setFotoPath(dto.foto_path());
 
-            List<CategoriaEntity> categoriasAtuais = new ArrayList<>(entity.getCategorias());
-            List<Long> novaCategoriaIds = dto.categoriaId();
+            List<JogoEntity> jogosAtuais = new ArrayList<>(entity.getJogos());
+            List<Long> novaJogoIds = dto.jogoId();
 
-            categoriasAtuais.removeIf(categoria -> !novaCategoriaIds.contains(categoria.getId()));
-            entity.getCategorias().clear();
-            entity.getCategorias().addAll(categoriasAtuais);
+            jogosAtuais.removeIf(jogo -> !novaJogoIds.contains(jogo.getId()));
+            entity.getJogos().clear();
+            entity.getJogos().addAll(jogosAtuais);
 
-            for (Long categoriaId : novaCategoriaIds) {
-                CategoriaEntity categoria = categoriaRepository.findById(categoriaId)
-                        .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada com o id: " + categoriaId));
-                entity.getCategorias().add(categoria);
+            for (Long jogoId : novaJogoIds) {
+                JogoEntity jogo = jogoRepository.findById(jogoId)
+                        .orElseThrow(() -> new EntityNotFoundException("Jogo não encontrado com o id: " + jogoId));
+                entity.getJogos().add(jogo);
             }
 
             jogadorService.atualizarJogadoresDoTime(entity, dto.jogadoresId());
@@ -118,9 +118,9 @@ public class TimeService {
                 predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("nome")), "%" + filter.nome().toLowerCase() + "%"));
             }
 
-            if (filter.categoria() != null && !filter.categoria().isEmpty()) {
-                Join<Time, CategoriaEntity> categoriaJoin = root.join("categorias");
-                predicates.add(criteriaBuilder.equal(categoriaJoin.get("categoria"), filter.categoria()));
+            if (filter.jogo() != null && !filter.jogo().isEmpty()) {
+                Join<Time, JogoEntity> jogoJoin = root.join("jogos");
+                predicates.add(criteriaBuilder.equal(jogoJoin.get("jogo"), filter.jogo()));
             }
 
             if (filter.liderTime() != null && !filter.liderTime().isBlank()) {

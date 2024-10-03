@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-02T15:03:45-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.3 (Oracle Corporation)"
+    date = "2024-10-03T16:34:29-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Amazon.com Inc.)"
 )
 @Component
 public class TimeMapperImpl implements TimeMapper {
@@ -22,20 +22,20 @@ public class TimeMapperImpl implements TimeMapper {
         }
 
         List<Long> jogadoresId = null;
-        List<Enum> categorias = null;
+        List<Enum> jogos = null;
         Long id = null;
         String nome = null;
         String descricao = null;
 
         jogadoresId = mapJogadoresToIds( time.getJogadores() );
-        categorias = mapCategorias( time.getCategorias() );
+        jogos = mapJogos( time.getJogos() );
         id = time.getId();
         nome = time.getNome();
         descricao = time.getDescricao();
 
         String foto_path = null;
 
-        TimeProjectionDTO timeProjectionDTO = new TimeProjectionDTO( id, nome, descricao, foto_path, jogadoresId, categorias );
+        TimeProjectionDTO timeProjectionDTO = new TimeProjectionDTO( id, nome, descricao, foto_path, jogadoresId, jogos );
 
         return timeProjectionDTO;
     }
