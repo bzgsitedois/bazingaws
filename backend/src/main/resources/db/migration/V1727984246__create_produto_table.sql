@@ -7,5 +7,5 @@ create table if not exists controle.produto(
     frete float,
     logo varchar(255),
     materiais varchar(255),
-    fotopath varchar(255)
+    foto_path varchar(255)
 )

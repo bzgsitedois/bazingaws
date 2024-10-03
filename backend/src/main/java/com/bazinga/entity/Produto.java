@@ -22,10 +22,10 @@ public class Produto {
 
     private double desconto;
 
-    @ManyToMany(cascade = {} , fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {} , fetch = FetchType.EAGER)
     @JoinTable(
             schema = "controle",
-            name = "tamanho_produto",
+            name = "produto_tamanho",
             joinColumns = @JoinColumn(name = "produto_id"),
             inverseJoinColumns = @JoinColumn(name = "tamanho_id")
     )
