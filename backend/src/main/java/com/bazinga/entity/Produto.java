@@ -2,6 +2,9 @@ package com.bazinga.entity;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(schema = "controle" , name = "produto")
 public class Produto {
@@ -19,7 +22,15 @@ public class Produto {
 
     private double desconto;
 
-    private double tamanho;
+    @ManyToMany(cascade = {} , fetch = FetchType.LAZY)
+    @JoinTable(
+            schema = "controle",
+            name = "tamanho_produto",
+            joinColumns = @JoinColumn(name = "produto_id"),
+            inverseJoinColumns = @JoinColumn(name = "tamanho_id")
+    )
+    @Enumerated(EnumType.STRING)
+    private Set<TamanhoEntity> tamanho = new HashSet<>();
 
     private double frete;
 
@@ -69,11 +80,11 @@ public class Produto {
         this.desconto = desconto;
     }
 
-    public double getTamanho() {
+    public Set<TamanhoEntity> getTamanho() {
         return tamanho;
     }
 
-    public void setTamanho(double tamanho) {
+    public void setTamanho(Set<TamanhoEntity> tamanho) {
         this.tamanho = tamanho;
     }
 

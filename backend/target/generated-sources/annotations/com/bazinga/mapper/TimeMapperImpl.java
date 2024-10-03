@@ -1,7 +1,7 @@
 package com.bazinga.mapper;
 
-import com.bazinga.dto.TimeCreateDTO;
-import com.bazinga.dto.TimeProjectionDTO;
+import com.bazinga.dto.TimeDTOs.TimeCreateDTO;
+import com.bazinga.dto.TimeDTOs.TimeProjectionDTO;
 import com.bazinga.entity.Time;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-30T01:05:04-0300",
+    date = "2024-10-02T23:57:31-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Amazon.com Inc.)"
 )
 @Component
