@@ -5,6 +5,7 @@ import com.bazinga.entity.enums.Perfil;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,7 +39,8 @@ public class Jogador {
     private Time time;
 
     private Boolean liderTime;
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "jogador")
+    private List<Venda> vendas;
 
     public Set<ClasseTFEntity> getClasses() {
         return classes;
