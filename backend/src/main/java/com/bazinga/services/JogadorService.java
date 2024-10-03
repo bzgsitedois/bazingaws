@@ -2,10 +2,6 @@ package com.bazinga.services;
 
 import com.bazinga.bases.BasePagination;
 import com.bazinga.dto.JogadorDTOs.*;
-import com.bazinga.dto.TimeDTOs.TimeCreateDTO;
-import com.bazinga.dto.TimeDTOs.TimeFilter;
-import com.bazinga.dto.TimeDTOs.TimeListAllDTO;
-import com.bazinga.entity.CategoriaEntity;
 import com.bazinga.entity.ClasseTFEntity;
 import com.bazinga.entity.Jogador;
 import com.bazinga.entity.Time;
@@ -90,7 +86,7 @@ public class JogadorService {
 
         for (Long id : dto.classesId()) {
             ClasseTFEntity classe = classeRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada com o id: " + id));
+                    .orElseThrow(() -> new EntityNotFoundException("Jogo não encontrada com o id: " + id));
             entity.getClasses().add(classe);
         }
 
@@ -108,7 +104,7 @@ public class JogadorService {
         Set<ClasseTFEntity> novasClasses = new HashSet<>();
         for (Long classeId : dto.classesId()) {
             ClasseTFEntity classeTF = classeRepository.findById(classeId)
-                    .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada com o id: " + classeId));
+                    .orElseThrow(() -> new EntityNotFoundException("Jogo não encontrada com o id: " + classeId));
             novasClasses.add(classeTF);
         }
         entity.setClasses(novasClasses);

@@ -1,6 +1,5 @@
 package com.bazinga.entity;
 
-import com.bazinga.entity.enums.ClasseTF;
 import com.bazinga.entity.enums.Perfil;
 import jakarta.persistence.*;
 

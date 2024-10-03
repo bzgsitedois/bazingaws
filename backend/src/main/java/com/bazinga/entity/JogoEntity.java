@@ -1,28 +1,27 @@
 package com.bazinga.entity;
 
-import com.bazinga.entity.enums.Categoria;
-import com.bazinga.entity.enums.ClasseTF;
+import com.bazinga.entity.enums.Jogo;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
-@Table(schema = "controle" ,name = "categoria")
-public class CategoriaEntity {
+@Table(schema = "controle" ,name = "jogo")
+public class JogoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true)
     @Enumerated(EnumType.STRING)
-    private Categoria categoria;
+    private Jogo jogo;
 
-    public Categoria getCategoria() {
-        return categoria;
+    public Jogo getJogo() {
+        return jogo;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setJogo(Jogo jogo) {
+        this.jogo = jogo;
     }
 
     public Long getId() {
@@ -37,11 +36,11 @@ public class CategoriaEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CategoriaEntity that = (CategoriaEntity) o;
-        return Objects.equals(id, that.id) && categoria == that.categoria;
+        JogoEntity that = (JogoEntity) o;
+        return Objects.equals(id, that.id) && jogo == that.jogo;
     }
 
     public int hashCode() {
-        return Objects.hash(id, categoria);
+        return Objects.hash(id, jogo);
     }
 }

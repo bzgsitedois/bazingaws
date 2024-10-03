@@ -1,13 +1,13 @@
 package com.bazinga.repository;
 import com.bazinga.bases.BaseRepository;
-import com.bazinga.entity.CategoriaEntity;
+import com.bazinga.entity.JogoEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface CategoriaRepository extends BaseRepository<CategoriaEntity> {
+public interface JogoRepository extends BaseRepository<JogoEntity> {
 
     @Override
-    Optional<CategoriaEntity> findById(Long id);
+    Optional<JogoEntity> findById(Long id);
 }

@@ -1,9 +1,7 @@
 package com.bazinga.repository;
 
 import com.bazinga.bases.BaseRepository;
-import com.bazinga.entity.CategoriaEntity;
 import com.bazinga.entity.ClasseTFEntity;
-import com.bazinga.entity.enums.ClasseTF;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
