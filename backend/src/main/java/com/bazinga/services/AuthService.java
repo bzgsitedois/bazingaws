@@ -29,7 +29,7 @@ private final JogadorRepository repository;
     }
 
     public String login(LoginDTO loginDto) {
-        try {
+
             var senha = new UsernamePasswordAuthenticationToken(loginDto.login(), loginDto.senha());
 
             Authentication auth = authenticationManager.authenticate(senha);
@@ -37,8 +37,5 @@ private final JogadorRepository repository;
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
 
             return tokenService.generateToken(userDetails);
-        } catch (AuthenticationException e) {
-            throw new RuntimeException();
-        }
     }
 }

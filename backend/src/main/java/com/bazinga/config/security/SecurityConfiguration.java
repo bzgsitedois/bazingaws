@@ -37,8 +37,8 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
 
                                 // Permissões para o perfil NADA (apenas GET e POST em /listAll)
-                                .requestMatchers(HttpMethod.GET).hasAuthority("NADA")
-                                .requestMatchers(HttpMethod.POST, "/listAll").hasAuthority("NADA")
+                                .requestMatchers(HttpMethod.GET).permitAll()
+                                .requestMatchers(HttpMethod.POST, "*/listAll").permitAll()
 
                                 // Permissões para ADMIN e JOGADOR em outras rotas
                                 .requestMatchers("/**").hasAnyAuthority("ADMIN", "JOGADOR")

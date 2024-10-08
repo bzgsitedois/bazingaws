@@ -30,7 +30,7 @@ public class TokenService {
 
         Algorithm algorithm = Algorithm.HMAC256(secret);
         return JWT.create()
-                .withIssuer("patrimonio-application")
+                .withIssuer("bazinga-application")
                 .withSubject(usuario.getUsername())
                 .withClaim("id", usuarioLogado.getId())
                 .withClaim("perfil", usuarioLogado.getPerfil().name())
