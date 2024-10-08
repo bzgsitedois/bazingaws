@@ -19,6 +19,9 @@ public interface JogadorRepository extends BaseRepository<Jogador> {
     @Query("SELECT j FROM Jogador j WHERE j.time.id = :timeId")
     List<Jogador> findByTimeId(@Param("timeId") Long timeId);
 
+    Optional<Jogador> findByEmail(String email);
+
+
     @Modifying
     @Transactional
     @Query("UPDATE Jogador j SET j.time.id = :timeId WHERE j.id IN :usuarioIds")
