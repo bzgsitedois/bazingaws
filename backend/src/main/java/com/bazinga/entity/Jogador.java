@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.*;
 
@@ -138,5 +139,9 @@ public class Jogador implements UserDetails {
     @Override
     public String getUsername() {
         return email;
+    }
+
+    public void setSenhaEncriptada(String senha) {
+        this.senha = new BCryptPasswordEncoder().encode(senha);
     }
 }

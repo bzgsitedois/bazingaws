@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -32,12 +33,13 @@ public class JogadorService {
     private final JogadorMapper jogadorMapper;
     private final ClasseRepository classeRepository;
     private final TimeRepository timeRepository;
-
-    public JogadorService(JogadorRepository jogadorRepository, JogadorMapper jogadorMapper, ClasseRepository classeRepository, TimeRepository timeRepository) {
+    private final BCryptPasswordEncoder passwordEncoder;
+    public JogadorService(JogadorRepository jogadorRepository, JogadorMapper jogadorMapper, ClasseRepository classeRepository, TimeRepository timeRepository, BCryptPasswordEncoder passwordEncoder) {
         this.jogadorRepository = jogadorRepository;
         this.jogadorMapper = jogadorMapper;
         this.classeRepository = classeRepository;
         this.timeRepository = timeRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void atualizarJogadoresDoTime(Time time, List<Long> novosUsuariosIds) {
@@ -89,6 +91,7 @@ public class JogadorService {
                     .orElseThrow(() -> new EntityNotFoundException("Jogo não encontrada com o id: " + id));
             entity.getClasses().add(classe);
         }
+        entity.setSenha(passwordEncoder.encode(dto.senha()));
 
         return jogadorRepository.save(entity);
     }

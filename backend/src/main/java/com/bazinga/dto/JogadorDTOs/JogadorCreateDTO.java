@@ -14,6 +14,8 @@ public record JogadorCreateDTO(
         @NotEmpty @NotNull @NotBlank
         String email,
         @NotEmpty @NotNull @NotBlank
+        String senha,
+        @NotEmpty @NotNull @NotBlank
         String perfil,
         String fotoPath,
         List<Long> classesId,
