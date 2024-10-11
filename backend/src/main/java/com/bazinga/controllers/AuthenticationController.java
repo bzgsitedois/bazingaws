@@ -1,7 +1,9 @@
 package com.bazinga.controllers;
 
+import com.bazinga.config.security.TokenInfo;
 import com.bazinga.config.security.TokenService;
 import com.bazinga.dto.LoginDTO;
+import com.bazinga.dto.ValidateTokenDTO;
 import com.bazinga.repository.JogadorRepository;
 import com.bazinga.services.AuthService;
 import com.bazinga.services.JogadorService;
@@ -47,10 +49,10 @@ public class AuthenticationController {
         return ResponseEntity.ok(token);
     }
 
-//    @PostMapping("/validate")
-//    public ResponseEntity<TokenInfo> validate(@RequestBody ValidateTokenDto tokenDto) {
-//        return ResponseEntity.ok().body(tokenService.validateToken(tokenDto.token()));
-//    }
+     @PostMapping("/validate")
+    public ResponseEntity<TokenInfo> validate(@RequestBody ValidateTokenDTO tokenDto) {
+      return ResponseEntity.ok().body(tokenService.validateToken(tokenDto.token()));
+  }
 //
 //    @PostMapping(value = "/esqueceu-senha")
 //    public ResponseEntity<UsuarioShallowDto> esqueceuSenha(@RequestBody RecuperacaoSenhaDTO recuperacaoSenhaDTO) throws Exception {

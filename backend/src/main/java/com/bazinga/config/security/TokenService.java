@@ -51,9 +51,10 @@ public class TokenService {
 
 
         Long id = decodedJWT.getClaim("id").asLong();
+        String perfil = decodedJWT.getClaim("perfil").asString();
 
 
-        return new TokenInfo(id, subject);
+        return new TokenInfo(id, subject , perfil);
     }
 
     private Instant generateExpiration() {
