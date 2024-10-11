@@ -22,6 +22,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,32 +56,80 @@ public class TimeService {
         return time.map(timeMapper::toTimeProjectionDTO);
     }
 
+
+    @Transactional
     public void deleteEntity(Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Jogador jogadorLogado = (Jogador) authentication.getPrincipal();
+
+        Time entity = timeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Id de time não encontrado"));
+
+
+        List<Jogador> jogadores = new ArrayList<>(entity.getJogadores());
+
+        if (!jogadorLogado.getId().equals(jogadores.stream()
+                .filter(Jogador::getLiderTime)
+                .findFirst()
+                .map(Jogador::getId)
+                .orElse(null))) {
+            throw new RuntimeException("Apenas o líder do time pode excluir o time.");
+        }
+
         timeRepository.deleteById(id);
     }
 
     public Time newEntity(TimeCreateDTO dto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Jogador jogadorLogado = (Jogador) authentication.getPrincipal();
+
+        if (jogadorLogado.getTime() != null) {
+            throw new RuntimeException("O jogador já faz parte de um time e não pode criar outro.");
+        }
+
         Time entity = timeMapper.toEntity(dto);
 
         if (dto.jogoId() == null || dto.jogoId().isEmpty()) {
             throw new IllegalArgumentException("Lista de jogos não pode ser vazia.");
         }
 
-
         for (Long id : dto.jogoId()) {
             JogoEntity jogo = jogoRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("Jogo não encontrada com o id: " + id));
+                    .orElseThrow(() -> new EntityNotFoundException("Jogo não encontrado com o id: " + id));
             entity.getJogos().add(jogo);
         }
 
-        return timeRepository.save(entity);
+        // Adiciona o jogador ao time
+        jogadorLogado.setTime(entity);
+        jogadorLogado.setLiderTime(true);
+
+        // Adiciona o jogador à lista de jogadores do time
+        entity.getJogadores().add(jogadorLogado);
+
+        // Salva a entidade Time e também atualiza o jogador
+        timeRepository.save(entity); // Isso salvará o time e a associação do jogador
+        jogadorRepository.save(jogadorLogado); // Certifique-se de que o jogador também seja salvo
+
+        return entity;
     }
 
     @Transactional
-    public Time updateEntity(@PathVariable Long id, @RequestBody @Valid TimeUpdateDTO dto){
+    public Time updateEntity(@PathVariable Long id, @RequestBody @Valid TimeUpdateDTO dto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Jogador jogadorLogado = (Jogador) authentication.getPrincipal();
+
         Optional<Time> optionalEntity = timeRepository.findById(id);
         if (optionalEntity.isPresent()) {
             Time entity = optionalEntity.get();
+
+            if (!jogadorLogado.getId().equals(entity.getJogadores().stream()
+                    .filter(Jogador::getLiderTime)
+                    .findFirst()
+                    .map(Jogador::getId)
+                    .orElse(null))) {
+                throw new RuntimeException("Apenas o líder do time pode fazer atualizações.");
+            }
+
             entity.setNome(dto.nome());
             entity.setDescricao(dto.descricao());
             entity.setFotoPath(dto.foto_path());
@@ -99,13 +149,10 @@ public class TimeService {
 
             jogadorService.atualizarJogadoresDoTime(entity, dto.jogadoresId());
 
-
             return timeRepository.save(entity);
         } else {
             throw new RuntimeException("Id de time não encontrado");
         }
-
-
     }
 
     public ResponseEntity<BasePagination<TimeListAllDTO>> listAll(int page, int size, TimeFilter filter, HttpServletRequest request) {

@@ -2,6 +2,7 @@ package com.bazinga.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,7 +32,7 @@ public class Time {
     private String fotoPath;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "time")
-    private List<Jogador> jogadores;
+    private List<Jogador> jogadores = new ArrayList<>();
 
     public String getNome() {
         return nome;
