@@ -78,7 +78,7 @@ public class JogadorService {
         return jogadores;
     }
 
-    public Optional<JogadorProjectionDTO> findById(long id) {
+    public Optional<JogadorProjectionDTO> findById(Long id) {
         Optional<Jogador> jogador = jogadorRepository.findJogadoresWithClassesById(id);
         return jogador.map(jogadorMapper::toJogadorProjectionDTO);
     }

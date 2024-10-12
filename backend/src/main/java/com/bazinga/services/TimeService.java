@@ -51,7 +51,7 @@ public class TimeService {
         this.jogadorRepository = jogadorRepository;
     }
 
-    public Optional<TimeProjectionDTO> findById(long id) {
+    public Optional<TimeProjectionDTO> findById(Long id) {
         Optional<Time> time = timeRepository.findTimeWithJogadoresAndJogosById(id);
         return time.map(timeMapper::toTimeProjectionDTO);
     }
@@ -65,7 +65,6 @@ public class TimeService {
         Time entity = timeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Id de time não encontrado"));
 
-
         List<Jogador> jogadores = new ArrayList<>(entity.getJogadores());
 
         if (!jogadorLogado.getId().equals(jogadores.stream()
@@ -75,6 +74,10 @@ public class TimeService {
                 .orElse(null))) {
             throw new RuntimeException("Apenas o líder do time pode excluir o time.");
         }
+
+        jogadores.forEach(jogador -> jogador.setTime(null));
+        jogadores.forEach(jogador -> jogador.setLiderTime(false));
+        jogadorRepository.saveAll(jogadores);
 
         timeRepository.deleteById(id);
     }
@@ -99,16 +102,13 @@ public class TimeService {
             entity.getJogos().add(jogo);
         }
 
-        // Adiciona o jogador ao time
         jogadorLogado.setTime(entity);
         jogadorLogado.setLiderTime(true);
 
-        // Adiciona o jogador à lista de jogadores do time
         entity.getJogadores().add(jogadorLogado);
 
-        // Salva a entidade Time e também atualiza o jogador
-        timeRepository.save(entity); // Isso salvará o time e a associação do jogador
-        jogadorRepository.save(jogadorLogado); // Certifique-se de que o jogador também seja salvo
+        timeRepository.save(entity);
+        jogadorRepository.save(jogadorLogado);
 
         return entity;
     }

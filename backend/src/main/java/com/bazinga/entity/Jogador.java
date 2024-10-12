@@ -38,7 +38,7 @@ public class Jogador implements UserDetails {
     private Set<ClasseTFEntity> classes = new HashSet<>();
 
     @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "time_id")
+    @JoinColumn(name = "time_id" , nullable = true)
     private Time time;
 
     private Boolean liderTime;
