@@ -89,4 +89,24 @@ public class JogadorController {
         return jogadorService.listAll(page, size, jogadorFilter, request);
     }
 
+    @PutMapping("/novoLider/{id}")
+    private ResponseEntity<?> novoLider(@PathVariable Long id) {
+        if (id != null) {
+            jogadorService.definirNovoLider(id);
+            return new ResponseEntity<>("O jogador "+ jogadorRepository.findById(id).get().getNome() + " agora é lider", HttpStatus.OK);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/exLider/{id}")
+    private ResponseEntity<?> exLider(@PathVariable Long id) {
+        if (id != null) {
+            jogadorService.tirarCargoLider(id);
+            return new ResponseEntity<>("O jogador "+ jogadorRepository.findById(id).get().getNome() + " não é mais lider", HttpStatus.OK);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

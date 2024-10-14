@@ -19,6 +19,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -94,6 +96,63 @@ public class JogadorService {
         entity.setSenha(passwordEncoder.encode(dto.senha()));
 
         return jogadorRepository.save(entity);
+    }
+
+
+    public void definirNovoLider(Long jogadorId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Jogador jogadorLogado = (Jogador) authentication.getPrincipal();
+
+        if (jogadorLogado.getTime() == null) {
+            throw new RuntimeException("Você não pertence a um time.");
+        }
+
+        if (!Boolean.TRUE.equals(jogadorLogado.getLiderTime())) {
+            throw new RuntimeException("Apenas o líder do time pode definir outro jogador como líder.");
+        }
+
+        Jogador novoLider = jogadorRepository.findById(jogadorId)
+                .orElseThrow(() -> new RuntimeException("Jogador não encontrado."));
+
+        if (!novoLider.getTime().getId().equals(jogadorLogado.getTime().getId())) {
+            throw new RuntimeException("O jogador deve pertencer ao mesmo time para ser promovido a líder.");
+        }
+
+        Long quantidadeLideres = jogadorRepository.countByTimeIdAndLiderTimeTrue(jogadorLogado.getTime().getId());
+        if (quantidadeLideres >= 2) {
+            throw new RuntimeException("O time já possui 2 líderes.");
+        }
+
+        novoLider.setLiderTime(true);
+        jogadorRepository.save(novoLider);
+    }
+
+    public void tirarCargoLider(Long jogadorId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Jogador jogadorLogado = (Jogador) authentication.getPrincipal();
+
+        if (jogadorLogado.getTime() == null) {
+            throw new RuntimeException("Você não pertence a um time.");
+        }
+
+        if (!Boolean.TRUE.equals(jogadorLogado.getLiderTime())) {
+            throw new RuntimeException("Apenas o líder do time pode retirar o cargo lider de outro jogador como líder.");
+        }
+
+        Jogador antigoLider = jogadorRepository.findById(jogadorId)
+                .orElseThrow(() -> new RuntimeException("Jogador não encontrado."));
+
+        if (!antigoLider.getTime().getId().equals(jogadorLogado.getTime().getId())) {
+            throw new RuntimeException("O jogador deve pertencer ao mesmo time para ser despromovido a líder.");
+        }
+
+        Long quantidadeLideres = jogadorRepository.countByTimeIdAndLiderTimeTrue(jogadorLogado.getTime().getId());
+        if (quantidadeLideres == 1) {
+            throw new RuntimeException("O time deve ter no minimo um lider.");
+        }
+
+        antigoLider.setLiderTime(false);
+        jogadorRepository.save(antigoLider);
     }
 
     public Jogador updateEntity(JogadorUpdateDTO dto , Long id){
