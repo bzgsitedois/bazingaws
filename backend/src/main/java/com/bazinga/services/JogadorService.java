@@ -93,6 +93,7 @@ public class JogadorService {
                     .orElseThrow(() -> new EntityNotFoundException("Jogo não encontrada com o id: " + id));
             entity.getClasses().add(classe);
         }
+        entity.setLiderTime(false);
         entity.setSenha(passwordEncoder.encode(dto.senha()));
 
         return jogadorRepository.save(entity);
