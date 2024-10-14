@@ -44,29 +44,61 @@ public class JogadorService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void atualizarJogadoresDoTime(Time time, List<Long> novosUsuariosIds) {
-        List<Jogador> usuariosAtuais = jogadorRepository.findByTimeId(time.getId());
+    public Jogador getJogadorAutenticado() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !(authentication.getPrincipal() instanceof Jogador)) {
+            throw new RuntimeException("Usuário não autenticado.");
+        }
+        return (Jogador) authentication.getPrincipal();
+    }
 
-        List<Long> idsUsuariosAtuais = usuariosAtuais.stream()
-                .map(Jogador::getId)
-                .toList();
+    public void removerJogadoresDoTime(Long timeId, List<Long> idsJogadoresParaRemover) {
+        Jogador jogadorLogado = getJogadorAutenticado();
 
-        List<Long> idsParaRemover = idsUsuariosAtuais.stream()
-                .filter(id -> !novosUsuariosIds.contains(id))
-                .toList();
 
-        if (!idsParaRemover.isEmpty()) {
-            jogadorRepository.removerUsuariosDoTime(idsParaRemover);
+        if (jogadorLogado.getTime() == null) {
+            throw new RuntimeException("Você não pertence a um time.");
         }
 
-        List<Long> idsParaAdicionar = novosUsuariosIds.stream()
-                .filter(id -> !idsUsuariosAtuais.contains(id))
-                .toList();
+        if (!Boolean.TRUE.equals(jogadorLogado.getLiderTime())) {
+            throw new RuntimeException("Apenas o líder do time pode definir outro jogador.");
+        }
 
-        if (!idsParaAdicionar.isEmpty()) {
-            jogadorRepository.adicionarUsuariosAoTime(time.getId(), idsParaAdicionar);
+       timeRepository.findById(timeId).orElseThrow(() -> new EntityNotFoundException("Time não encontrado"));
+
+        List<Jogador> jogadoresParaRemover = jogadorRepository.findAllById(idsJogadoresParaRemover);
+
+        if (!jogadoresParaRemover.isEmpty()) {
+            jogadoresParaRemover.forEach(jogador -> jogador.setTime(null));
+            jogadorRepository.saveAll(jogadoresParaRemover);
         }
     }
+
+
+    public void adicionarJogadoresAoTime(Long timeId, List<Long> idsJogadoresParaAdicionar) {
+
+        Jogador jogadorLogado = getJogadorAutenticado();
+
+
+        if (jogadorLogado.getTime() == null) {
+            throw new RuntimeException("Você não pertence a um time.");
+        }
+
+        if (!Boolean.TRUE.equals(jogadorLogado.getLiderTime())) {
+            throw new RuntimeException("Apenas o líder do time pode definir outro jogador.");
+        }
+
+        Time time = timeRepository.findById(timeId)
+                .orElseThrow(() -> new EntityNotFoundException("Time não encontrado"));
+
+        List<Jogador> jogadoresParaAdicionar = jogadorRepository.findAllById(idsJogadoresParaAdicionar);
+
+        if (!jogadoresParaAdicionar.isEmpty()) {
+            jogadoresParaAdicionar.forEach(jogador -> jogador.setTime(time));
+            jogadorRepository.saveAll(jogadoresParaAdicionar);
+        }
+    }
+
 
     public List<JogadorSemTimeDTO> buscarJogadoresSemTime() {
         List<Object[]> resultados = jogadorRepository.findJogadoresSemTime();
@@ -101,8 +133,8 @@ public class JogadorService {
 
 
     public void definirNovoLider(Long jogadorId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Jogador jogadorLogado = (Jogador) authentication.getPrincipal();
+        Jogador jogadorLogado = getJogadorAutenticado();
+
 
         if (jogadorLogado.getTime() == null) {
             throw new RuntimeException("Você não pertence a um time.");
@@ -129,8 +161,8 @@ public class JogadorService {
     }
 
     public void tirarCargoLider(Long jogadorId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Jogador jogadorLogado = (Jogador) authentication.getPrincipal();
+        Jogador jogadorLogado = getJogadorAutenticado();
+
 
         if (jogadorLogado.getTime() == null) {
             throw new RuntimeException("Você não pertence a um time.");

@@ -4,6 +4,7 @@ import com.bazinga.bases.BasePagination;
 import com.bazinga.dto.TimeDTOs.*;
 import com.bazinga.entity.Time;
 import com.bazinga.repository.TimeRepository;
+import com.bazinga.services.JogadorService;
 import com.bazinga.services.TimeService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -20,11 +22,13 @@ public class TimeController {
 
     private final TimeService timeService;
     private final TimeRepository timeRepository;
+    private final JogadorService jogadorService;
 
 
-    private TimeController(TimeService timeService, TimeRepository timeRepository) {
+    private TimeController(TimeService timeService, TimeRepository timeRepository, JogadorService jogadorService) {
         this.timeService = timeService;
         this.timeRepository = timeRepository;
+        this.jogadorService = jogadorService;
     }
 
     @GetMapping("/{id}")
@@ -75,4 +79,22 @@ public class TimeController {
 
         return timeService.listAll(page, size, timeFilter, request);
     }
+
+    @PostMapping("/{timeId}/jogadores/adicionar")
+    public ResponseEntity<String> adicionarJogadoresAoTime(
+            @PathVariable Long timeId,
+            @RequestBody AddJogadoresTimeDTO jogadores) {
+        jogadorService.adicionarJogadoresAoTime(timeId, jogadores.idsJogadores());
+        return ResponseEntity.ok("Jogadores adicionados com sucesso.");
+    }
+
+    @PostMapping("/{timeId}/jogadores/remover")
+    public ResponseEntity<String> removerJogadoresDoTime(
+            @PathVariable Long timeId,
+            @RequestBody AddJogadoresTimeDTO jogadores) {
+        jogadorService.removerJogadoresDoTime(timeId, jogadores.idsJogadores());
+        return ResponseEntity.ok("Jogadores removidos com sucesso.");
+    }
+
+
 }

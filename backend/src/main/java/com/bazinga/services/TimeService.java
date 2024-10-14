@@ -59,8 +59,7 @@ public class TimeService {
 
     @Transactional
     public void deleteEntity(Long id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Jogador jogadorLogado = (Jogador) authentication.getPrincipal();
+        Jogador jogadorLogado = jogadorService.getJogadorAutenticado();
 
         Time entity = timeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Id de time não encontrado"));
@@ -83,8 +82,8 @@ public class TimeService {
     }
 
     public Time newEntity(TimeCreateDTO dto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Jogador jogadorLogado = (Jogador) authentication.getPrincipal();
+        Jogador jogadorLogado = jogadorService.getJogadorAutenticado();
+
 
         if (jogadorLogado.getTime() != null) {
             throw new RuntimeException("O jogador já faz parte de um time e não pode criar outro.");
@@ -115,8 +114,8 @@ public class TimeService {
 
     @Transactional
     public Time updateEntity(@PathVariable Long id, @RequestBody @Valid TimeUpdateDTO dto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Jogador jogadorLogado = (Jogador) authentication.getPrincipal();
+        Jogador jogadorLogado = jogadorService.getJogadorAutenticado();
+
 
         Optional<Time> optionalEntity = timeRepository.findById(id);
         if (optionalEntity.isPresent()) {
@@ -146,8 +145,6 @@ public class TimeService {
                         .orElseThrow(() -> new EntityNotFoundException("Jogo não encontrado com o id: " + jogoId));
                 entity.getJogos().add(jogo);
             }
-
-            jogadorService.atualizarJogadoresDoTime(entity, dto.jogadoresId());
 
             return timeRepository.save(entity);
         } else {

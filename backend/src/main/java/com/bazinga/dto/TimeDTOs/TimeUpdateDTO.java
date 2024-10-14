@@ -12,7 +12,6 @@ public record TimeUpdateDTO (
         String descricao,
         @NotEmpty @NotNull @NotBlank
         List<Long> jogoId,
-        List<Long> jogadoresId,
         String foto_path
 ){
 }
