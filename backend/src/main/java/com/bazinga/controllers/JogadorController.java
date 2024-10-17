@@ -15,8 +15,10 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,9 +52,10 @@ public class JogadorController {
         return ResponseEntity.ok(jogadorDto);
     }
 
-    @PostMapping
-    private ResponseEntity<?> newEntity(@RequestBody @Valid JogadorCreateDTO dto) {
-        jogadorService.newEntity(dto);
+    @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    private ResponseEntity<?> newEntity(@RequestPart("jogador") @Valid JogadorCreateDTO dto,
+                                        @RequestPart(value = "foto", required = false) MultipartFile foto) {
+        jogadorService.newEntity(dto, foto);
         return new ResponseEntity<>("Jogador Criado", HttpStatus.CREATED);
     }
 
@@ -109,5 +112,18 @@ public class JogadorController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping(value = "/foto/upload")
+    public ResponseEntity<Object> uploadFoto(@RequestParam("file") MultipartFile foto) {
+        jogadorService.uploadFoto(foto);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/foto/{id}")
+    public ResponseEntity<Object> retornaPathFoto(@PathVariable Long id) {
+        String path = jogadorService.retornaPathFoto(id);
+        return ResponseEntity.ok().body(path);
+    }
+
 
 }
