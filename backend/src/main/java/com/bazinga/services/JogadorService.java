@@ -5,6 +5,7 @@ import com.bazinga.dto.JogadorDTOs.*;
 import com.bazinga.entity.ClasseTFEntity;
 import com.bazinga.entity.Jogador;
 import com.bazinga.entity.Time;
+import com.bazinga.exception.JogadorNaoEncontradoException;
 import com.bazinga.mapper.JogadorMapper;
 import com.bazinga.repository.ClasseRepository;
 import com.bazinga.repository.JogadorRepository;
@@ -106,6 +107,9 @@ public class JogadorService {
 
     public List<JogadorSemTimeDTO> buscarJogadoresSemTime() {
         List<Object[]> resultados = jogadorRepository.findJogadoresSemTime();
+        if (resultados.isEmpty()) {
+            throw new JogadorNaoEncontradoException();
+        }
         List<JogadorSemTimeDTO> jogadores = new ArrayList<>();
 
         for (Object[] resultado : resultados) {
@@ -118,6 +122,9 @@ public class JogadorService {
 
     public Optional<JogadorProjectionDTO> findById(Long id) {
         Optional<Jogador> jogador = jogadorRepository.findJogadoresWithClassesById(id);
+        if (jogador.isEmpty()) {
+            throw new JogadorNaoEncontradoException();
+        }
         return jogador.map(jogadorMapper::toJogadorProjectionDTO);
     }
 
@@ -149,7 +156,7 @@ public class JogadorService {
         }
 
         Jogador novoLider = jogadorRepository.findById(jogadorId)
-                .orElseThrow(() -> new RuntimeException("Jogador não encontrado."));
+                .orElseThrow(JogadorNaoEncontradoException::new);
 
         if (!novoLider.getTime().getId().equals(jogadorLogado.getTime().getId())) {
             throw new RuntimeException("O jogador deve pertencer ao mesmo time para ser promovido a líder.");
@@ -177,7 +184,7 @@ public class JogadorService {
         }
 
         Jogador antigoLider = jogadorRepository.findById(jogadorId)
-                .orElseThrow(() -> new RuntimeException("Jogador não encontrado."));
+                .orElseThrow(JogadorNaoEncontradoException::new);
 
         if (!antigoLider.getTime().getId().equals(jogadorLogado.getTime().getId())) {
             throw new RuntimeException("O jogador deve pertencer ao mesmo time para ser despromovido a líder.");
@@ -194,7 +201,7 @@ public class JogadorService {
 
     public Jogador updateEntity(JogadorUpdateDTO dto , Long id){
         Jogador entity = jogadorRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Jogador não encontrado com o id: " + id));
+                .orElseThrow(JogadorNaoEncontradoException::new);
 
         entity.setNome(dto.nome());
         entity.setEmail(dto.email());

@@ -6,6 +6,7 @@ import com.bazinga.dto.TimeDTOs.*;
 import com.bazinga.entity.JogoEntity;
 import com.bazinga.entity.Jogador;
 import com.bazinga.entity.Time;
+import com.bazinga.exception.TimeNaoEncontradoException;
 import com.bazinga.mapper.TimeMapper;
 import com.bazinga.repository.JogoRepository;
 import com.bazinga.repository.JogadorRepository;
@@ -53,6 +54,9 @@ public class TimeService {
 
     public Optional<TimeProjectionDTO> findById(Long id) {
         Optional<Time> time = timeRepository.findTimeWithJogadoresAndJogosById(id);
+        if (time.isPresent()) {
+            throw new TimeNaoEncontradoException();
+        }
         return time.map(timeMapper::toTimeProjectionDTO);
     }
 
@@ -62,7 +66,8 @@ public class TimeService {
         Jogador jogadorLogado = jogadorService.getJogadorAutenticado();
 
         Time entity = timeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Id de time não encontrado"));
+                .orElseThrow(TimeNaoEncontradoException::new);
+
 
         List<Jogador> jogadores = new ArrayList<>(entity.getJogadores());
 
@@ -118,6 +123,8 @@ public class TimeService {
 
 
         Optional<Time> optionalEntity = timeRepository.findById(id);
+
+
         if (optionalEntity.isPresent()) {
             Time entity = optionalEntity.get();
 
@@ -148,7 +155,7 @@ public class TimeService {
 
             return timeRepository.save(entity);
         } else {
-            throw new RuntimeException("Id de time não encontrado");
+            throw new TimeNaoEncontradoException();
         }
     }
 

@@ -3,6 +3,7 @@ package com.bazinga.controllers;
 import com.bazinga.bases.BasePagination;
 import com.bazinga.dto.TimeDTOs.*;
 import com.bazinga.entity.Time;
+import com.bazinga.exception.TimeNaoEncontradoException;
 import com.bazinga.repository.TimeRepository;
 import com.bazinga.services.JogadorService;
 import com.bazinga.services.TimeService;
@@ -34,7 +35,7 @@ public class TimeController {
     @GetMapping("/{id}")
     private ResponseEntity<TimeProjectionDTO> buscarPeloId(@PathVariable Long id) {
         TimeProjectionDTO timeDTO = timeService.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Time não encontrado com o ID: " + id));
+                .orElseThrow(TimeNaoEncontradoException::new);
         return ResponseEntity.ok(timeDTO);
     }
 

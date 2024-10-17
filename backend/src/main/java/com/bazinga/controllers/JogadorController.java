@@ -8,6 +8,7 @@ import com.bazinga.dto.TimeDTOs.TimeListAllDTO;
 import com.bazinga.dto.TimeDTOs.TimeProjectionDTO;
 import com.bazinga.entity.Jogador;
 import com.bazinga.entity.Time;
+import com.bazinga.exception.JogadorNaoEncontradoException;
 import com.bazinga.repository.JogadorRepository;
 import com.bazinga.services.JogadorService;
 import jakarta.persistence.EntityNotFoundException;
@@ -45,7 +46,7 @@ public class JogadorController {
     @GetMapping("/{id}")
     private ResponseEntity<JogadorProjectionDTO> findById(@PathVariable Long id) {
         JogadorProjectionDTO jogadorDto = jogadorService.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Jogador não encontrado com o ID: " + id));
+                .orElseThrow(JogadorNaoEncontradoException::new);
         return ResponseEntity.ok(jogadorDto);
     }
 
@@ -71,7 +72,7 @@ public class JogadorController {
         entity.ifPresentOrElse(
                 e -> jogadorService.deleteEntity(id),
                 () -> {
-                    throw new RuntimeException("Não foi possível encontrar o parâmetro de id: " + id);
+                    throw new JogadorNaoEncontradoException();
                 }
         );
         return new ResponseEntity<>("Objeto deletado", HttpStatus.OK);
