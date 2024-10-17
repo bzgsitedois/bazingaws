@@ -84,6 +84,7 @@ public class JogadorService {
             throw new RuntimeException("Você não pertence a um time.");
         }
 
+
         if (!Boolean.TRUE.equals(jogadorLogado.getLiderTime())) {
             throw new RuntimeException("Apenas o líder do time pode definir outro jogador.");
         }
@@ -93,6 +94,9 @@ public class JogadorService {
 
         List<Jogador> jogadoresParaAdicionar = jogadorRepository.findAllById(idsJogadoresParaAdicionar);
 
+        if (jogadoresParaAdicionar.get(0).getTime() != null) {
+            throw new RuntimeException("Jogador "+jogadoresParaAdicionar.get(0).getNome()+" ja tem time.");
+        }
         if (!jogadoresParaAdicionar.isEmpty()) {
             jogadoresParaAdicionar.forEach(jogador -> jogador.setTime(time));
             jogadorRepository.saveAll(jogadoresParaAdicionar);
