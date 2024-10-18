@@ -173,38 +173,19 @@ public class JogadorService {
         return jogador.map(jogadorMapper::toJogadorProjectionDTO);
     }
 
-    public Jogador newEntity(JogadorCreateDTO dto, MultipartFile foto) {
+    public Jogador newEntity(JogadorCreateDTO dto) {
         Jogador entity = jogadorMapper.toEntity(dto);
 
-        // Adiciona as classes ao jogador
         for (Long id : dto.classesId()) {
             ClasseTFEntity classe = classeRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("Classe não encontrada com o id: " + id));
+                    .orElseThrow(() -> new EntityNotFoundException("Jogo não encontrada com o id: " + id));
             entity.getClasses().add(classe);
         }
         entity.setLiderTime(false);
         entity.setSenha(passwordEncoder.encode(dto.senha()));
 
-        // Salva o jogador sem a foto
-        Jogador savedEntity = jogadorRepository.save(entity);
-
-        // Processa a foto (se fornecida)
-        if (foto != null && !foto.isEmpty()) {
-            try {
-                String fotoPath = getFotoPathPorJogador(savedEntity); // Define o caminho da foto
-                Files.createDirectories(Paths.get(fotoDir)); // Cria o diretório se não existir
-                Files.write(Paths.get(fotoPath), foto.getBytes()); // Salva a foto no caminho definido
-
-                savedEntity.setFotoPath(fotoPath); // Atualiza o caminho da foto no jogador
-                jogadorRepository.save(savedEntity); // Atualiza o jogador com o caminho da foto
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return savedEntity;
+        return jogadorRepository.save(entity);
     }
-
 
 
     public void definirNovoLider(Long jogadorId) {

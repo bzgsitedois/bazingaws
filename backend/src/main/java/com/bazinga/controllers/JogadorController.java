@@ -15,7 +15,6 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,10 +51,9 @@ public class JogadorController {
         return ResponseEntity.ok(jogadorDto);
     }
 
-    @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    private ResponseEntity<?> newEntity(@RequestPart("jogador") @Valid JogadorCreateDTO dto,
-                                        @RequestPart(value = "foto", required = false) MultipartFile foto) {
-        jogadorService.newEntity(dto, foto);
+    @PostMapping
+    private ResponseEntity<?> newEntity(@RequestBody @Valid JogadorCreateDTO dto) {
+        jogadorService.newEntity(dto);
         return new ResponseEntity<>("Jogador Criado", HttpStatus.CREATED);
     }
 
