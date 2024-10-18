@@ -1,1 +1,46 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'bootstrap';
+@import "@angular/material";
+:root {
+  --font-weight-bold: 700;
+  --font-weight-normal: 400;
+  --font-weight-bolder: 900;
+
+  --purewhite: #FFFFFFFF;
+  --white-default: #ffffff;
+  --white-gray: #c7c1c1;
+  --white-disabled: rgba(183, 183, 183, 0.89);
+  --background-table: #f2f2f2;
+  --line-gray: #a0a0a0;
+  --dark-gray: #5b5b5b;
+  --chumbo: #8A8D8F;
+  --text-gray: #666666;
+  --pureblack: #000000;
+  --black-default: #211f1e;
+
+
+}
+
+html {
+  height: 100%;
+  font-size: 20px;
+}
+
+body {
+  margin: 0;
+  font-family: Nunito, Roboto, sans-serif !important;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+//
+//.light-mode {
+//  background-color: #fff;
+//  color: #000;
+//}
+
+//.dark-mode {
+//  background-color: #5b5b5b;
+//  color: #fff;
+//}
+//@font-face{
+//  font-family: LoLFont;
+//  src: url("BeaufortforLOL-Heavy.ttf");
+//}
