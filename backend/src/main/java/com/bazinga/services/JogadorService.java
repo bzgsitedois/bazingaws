@@ -79,11 +79,12 @@ public class JogadorService {
             Files.write(Paths.get(fotoPath), foto.getBytes());
 
             jogador.setFotoPath(fotoPath);
+
+            jogadorRepository.save(jogador);
         } catch (IOException e) {
             e.getLocalizedMessage();
         }
     }
-
 
     public String retornaPathFoto(Long id) {
 
