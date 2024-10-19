@@ -1,0 +1,1 @@
+alter table if exists seguranca.jogador add column if not exists senha varchar(155)

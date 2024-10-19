@@ -1,0 +1,16 @@
+C:\Users\enzin\Desktop\bazingaws\backend\src\main\java\com\bazinga\bases\BasePagination.java
+C:\Users\enzin\Desktop\bazingaws\backend\src\main\java\com\bazinga\bases\BaseRepository.java
+C:\Users\enzin\Desktop\bazingaws\backend\src\main\java\com\bazinga\bases\MetadadosResponse.java
+C:\Users\enzin\Desktop\bazingaws\backend\src\main\java\com\bazinga\BazingaApplication.java
+C:\Users\enzin\Desktop\bazingaws\backend\src\main\java\com\bazinga\controllers\TimeController.java
+C:\Users\enzin\Desktop\bazingaws\backend\src\main\java\com\bazinga\dto\TimeProjectionDTO.java
+C:\Users\enzin\Desktop\bazingaws\backend\src\main\java\com\bazinga\entity\CategoriaEntity.java
+C:\Users\enzin\Desktop\bazingaws\backend\src\main\java\com\bazinga\entity\ClasseTFEntity.java
+C:\Users\enzin\Desktop\bazingaws\backend\src\main\java\com\bazinga\entity\enums\Categoria.java
+C:\Users\enzin\Desktop\bazingaws\backend\src\main\java\com\bazinga\entity\enums\ClasseTF.java
+C:\Users\enzin\Desktop\bazingaws\backend\src\main\java\com\bazinga\entity\enums\Perfil.java
+C:\Users\enzin\Desktop\bazingaws\backend\src\main\java\com\bazinga\entity\Jogador.java
+C:\Users\enzin\Desktop\bazingaws\backend\src\main\java\com\bazinga\entity\Time.java
+C:\Users\enzin\Desktop\bazingaws\backend\src\main\java\com\bazinga\mapper\TimeMapper.java
+C:\Users\enzin\Desktop\bazingaws\backend\src\main\java\com\bazinga\repository\TimeRepository.java
+C:\Users\enzin\Desktop\bazingaws\backend\src\main\java\com\bazinga\services\TimeService.java
