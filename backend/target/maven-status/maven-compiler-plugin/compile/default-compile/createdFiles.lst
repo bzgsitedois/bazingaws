@@ -1,0 +1,17 @@
+com\bazinga\entity\enums\Categoria.class
+com\bazinga\repository\TimeRepository.class
+com\bazinga\services\TimeService.class
+com\bazinga\entity\enums\Perfil.class
+com\bazinga\bases\BaseRepository.class
+com\bazinga\entity\Time.class
+com\bazinga\mapper\TimeMapperImpl.class
+com\bazinga\mapper\TimeMapper.class
+com\bazinga\entity\ClasseTFEntity.class
+com\bazinga\entity\CategoriaEntity.class
+com\bazinga\entity\Jogador.class
+com\bazinga\BazingaApplication.class
+com\bazinga\bases\BasePagination.class
+com\bazinga\controllers\TimeController.class
+com\bazinga\dto\TimeProjectionDTO.class
+com\bazinga\bases\MetadadosResponse.class
+com\bazinga\entity\enums\ClasseTF.class

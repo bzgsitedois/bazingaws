@@ -1,0 +1,240 @@
+-------------------------------------------------------------------------------
+Test set: com.bazinga.BackendApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 2.763 s <<< FAILURE! -- in com.bazinga.BackendApplicationTests
+com.bazinga.BackendApplicationTests.contextLoads -- Time elapsed: 0.012 s <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@6206b4a7 testClass = com.bazinga.BackendApplicationTests, locations = [], classes = [com.bazinga.BazingaApplication], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2254127a, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@14bdbc74, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@1224144a, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@448c8166, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@4a07d605, org.springframework.boot.test.context.SpringBootTestAnnotation@6861017c], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:191)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:130)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:163)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:310)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:734)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:762)
+	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'flywayInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Migration V1727207782__create_jogador_table.sql failed
+------------------------------------------------------
+SQL State  : 42001
+Error Code : 42001
+Message    : Syntax error in SQL statement "[*]DO $$\000d\000a    BEGIN\000d\000a        IF NOT EXISTS (select *\000d\000a                       from information_schema.table_constraints\000d\000a                       where table_schema = 'controle'\000d\000a                         and table_name = 'time'\000d\000a                         and constraint_name = 'fk_time')\000d\000a        THEN\000d\000a            alter table if exists seguranca.jogador\000d\000a                add constraint fk_time foreign key (time_id) references controle.time ON DELETE SET NULL;\000d\000a        END IF;\000d\000aEND $$"; expected "DELETE, DROP"; SQL statement:
+DO $$
+    BEGIN
+        IF NOT EXISTS (select *
+                       from information_schema.table_constraints
+                       where table_schema = 'controle'
+                         and table_name = 'time'
+                         and constraint_name = 'fk_time')
+        THEN
+            alter table if exists seguranca.jogador
+                add constraint fk_time foreign key (time_id) references controle.time ON DELETE SET NULL;
+        END IF;
+END $$ [42001-224]
+Location   : db/migration/V1727207782__create_jogador_table.sql (C:\Users\enzin\Desktop\bazingaws\backend\target\classes\db\migration\V1727207782__create_jogador_table.sql)
+Line       : 12
+Statement  : DO $$
+    BEGIN
+        IF NOT EXISTS (select *
+                       from information_schema.table_constraints
+                       where table_schema = 'controle'
+                         and table_name = 'time'
+                         and constraint_name = 'fk_time')
+        THEN
+            alter table if exists seguranca.jogador
+                add constraint fk_time foreign key (time_id) references controle.time ON DELETE SET NULL;
+        END IF;
+END $$
+
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1463)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:553)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+	... 17 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Migration V1727207782__create_jogador_table.sql failed
+------------------------------------------------------
+SQL State  : 42001
+Error Code : 42001
+Message    : Syntax error in SQL statement "[*]DO $$\000d\000a    BEGIN\000d\000a        IF NOT EXISTS (select *\000d\000a                       from information_schema.table_constraints\000d\000a                       where table_schema = 'controle'\000d\000a                         and table_name = 'time'\000d\000a                         and constraint_name = 'fk_time')\000d\000a        THEN\000d\000a            alter table if exists seguranca.jogador\000d\000a                add constraint fk_time foreign key (time_id) references controle.time ON DELETE SET NULL;\000d\000a        END IF;\000d\000aEND $$"; expected "DELETE, DROP"; SQL statement:
+DO $$
+    BEGIN
+        IF NOT EXISTS (select *
+                       from information_schema.table_constraints
+                       where table_schema = 'controle'
+                         and table_name = 'time'
+                         and constraint_name = 'fk_time')
+        THEN
+            alter table if exists seguranca.jogador
+                add constraint fk_time foreign key (time_id) references controle.time ON DELETE SET NULL;
+        END IF;
+END $$ [42001-224]
+Location   : db/migration/V1727207782__create_jogador_table.sql (C:\Users\enzin\Desktop\bazingaws\backend\target\classes\db\migration\V1727207782__create_jogador_table.sql)
+Line       : 12
+Statement  : DO $$
+    BEGIN
+        IF NOT EXISTS (select *
+                       from information_schema.table_constraints
+                       where table_schema = 'controle'
+                         and table_name = 'time'
+                         and constraint_name = 'fk_time')
+        THEN
+            alter table if exists seguranca.jogador
+                add constraint fk_time foreign key (time_id) references controle.time ON DELETE SET NULL;
+        END IF;
+END $$
+
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1806)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:313)
+	... 32 more
+Caused by: org.flywaydb.core.internal.command.DbMigrate$FlywayMigrateException: Migration V1727207782__create_jogador_table.sql failed
+------------------------------------------------------
+SQL State  : 42001
+Error Code : 42001
+Message    : Syntax error in SQL statement "[*]DO $$\000d\000a    BEGIN\000d\000a        IF NOT EXISTS (select *\000d\000a                       from information_schema.table_constraints\000d\000a                       where table_schema = 'controle'\000d\000a                         and table_name = 'time'\000d\000a                         and constraint_name = 'fk_time')\000d\000a        THEN\000d\000a            alter table if exists seguranca.jogador\000d\000a                add constraint fk_time foreign key (time_id) references controle.time ON DELETE SET NULL;\000d\000a        END IF;\000d\000aEND $$"; expected "DELETE, DROP"; SQL statement:
+DO $$
+    BEGIN
+        IF NOT EXISTS (select *
+                       from information_schema.table_constraints
+                       where table_schema = 'controle'
+                         and table_name = 'time'
+                         and constraint_name = 'fk_time')
+        THEN
+            alter table if exists seguranca.jogador
+                add constraint fk_time foreign key (time_id) references controle.time ON DELETE SET NULL;
+        END IF;
+END $$ [42001-224]
+Location   : db/migration/V1727207782__create_jogador_table.sql (C:\Users\enzin\Desktop\bazingaws\backend\target\classes\db\migration\V1727207782__create_jogador_table.sql)
+Line       : 12
+Statement  : DO $$
+    BEGIN
+        IF NOT EXISTS (select *
+                       from information_schema.table_constraints
+                       where table_schema = 'controle'
+                         and table_name = 'time'
+                         and constraint_name = 'fk_time')
+        THEN
+            alter table if exists seguranca.jogador
+                add constraint fk_time foreign key (time_id) references controle.time ON DELETE SET NULL;
+        END IF;
+END $$
+
+	at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:382)
+	at org.flywaydb.core.internal.command.DbMigrate.lambda$applyMigrations$1(DbMigrate.java:272)
+	at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:55)
+	at org.flywaydb.core.internal.command.DbMigrate.applyMigrations(DbMigrate.java:271)
+	at org.flywaydb.core.internal.command.DbMigrate.migrateGroup(DbMigrate.java:244)
+	at org.flywaydb.core.internal.command.DbMigrate.lambda$migrateAll$0(DbMigrate.java:139)
+	at org.flywaydb.core.internal.jdbc.TableLockingExecutionTemplate$1.call(TableLockingExecutionTemplate.java:36)
+	at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:55)
+	at org.flywaydb.core.internal.jdbc.TableLockingExecutionTemplate.execute(TableLockingExecutionTemplate.java:31)
+	at org.flywaydb.core.internal.database.base.Connection.lock(Connection.java:102)
+	at org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory.lock(JdbcTableSchemaHistory.java:145)
+	at org.flywaydb.core.internal.command.DbMigrate.migrateAll(DbMigrate.java:139)
+	at org.flywaydb.core.internal.command.DbMigrate.migrate(DbMigrate.java:97)
+	at org.flywaydb.core.Flyway.lambda$migrate$0(Flyway.java:202)
+	at org.flywaydb.core.FlywayExecutor.execute(FlywayExecutor.java:205)
+	at org.flywaydb.core.Flyway.migrate(Flyway.java:147)
+	at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+	... 39 more
+Caused by: org.flywaydb.core.internal.sqlscript.FlywaySqlScriptException: Migration V1727207782__create_jogador_table.sql failed
+------------------------------------------------------
+SQL State  : 42001
+Error Code : 42001
+Message    : Syntax error in SQL statement "[*]DO $$\000d\000a    BEGIN\000d\000a        IF NOT EXISTS (select *\000d\000a                       from information_schema.table_constraints\000d\000a                       where table_schema = 'controle'\000d\000a                         and table_name = 'time'\000d\000a                         and constraint_name = 'fk_time')\000d\000a        THEN\000d\000a            alter table if exists seguranca.jogador\000d\000a                add constraint fk_time foreign key (time_id) references controle.time ON DELETE SET NULL;\000d\000a        END IF;\000d\000aEND $$"; expected "DELETE, DROP"; SQL statement:
+DO $$
+    BEGIN
+        IF NOT EXISTS (select *
+                       from information_schema.table_constraints
+                       where table_schema = 'controle'
+                         and table_name = 'time'
+                         and constraint_name = 'fk_time')
+        THEN
+            alter table if exists seguranca.jogador
+                add constraint fk_time foreign key (time_id) references controle.time ON DELETE SET NULL;
+        END IF;
+END $$ [42001-224]
+Location   : db/migration/V1727207782__create_jogador_table.sql (C:\Users\enzin\Desktop\bazingaws\backend\target\classes\db\migration\V1727207782__create_jogador_table.sql)
+Line       : 12
+Statement  : DO $$
+    BEGIN
+        IF NOT EXISTS (select *
+                       from information_schema.table_constraints
+                       where table_schema = 'controle'
+                         and table_name = 'time'
+                         and constraint_name = 'fk_time')
+        THEN
+            alter table if exists seguranca.jogador
+                add constraint fk_time foreign key (time_id) references controle.time ON DELETE SET NULL;
+        END IF;
+END $$
+
+	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.handleException(DefaultSqlScriptExecutor.java:252)
+	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:214)
+	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.execute(DefaultSqlScriptExecutor.java:133)
+	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.executeOnce(SqlMigrationExecutor.java:65)
+	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.lambda$execute$0(SqlMigrationExecutor.java:57)
+	at org.flywaydb.core.internal.database.DefaultExecutionStrategy.execute(DefaultExecutionStrategy.java:27)
+	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.execute(SqlMigrationExecutor.java:56)
+	at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:374)
+	... 57 more
+Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]DO $$\000d\000a    BEGIN\000d\000a        IF NOT EXISTS (select *\000d\000a                       from information_schema.table_constraints\000d\000a                       where table_schema = 'controle'\000d\000a                         and table_name = 'time'\000d\000a                         and constraint_name = 'fk_time')\000d\000a        THEN\000d\000a            alter table if exists seguranca.jogador\000d\000a                add constraint fk_time foreign key (time_id) references controle.time ON DELETE SET NULL;\000d\000a        END IF;\000d\000aEND $$"; expected "DELETE, DROP"; SQL statement:
+DO $$
+    BEGIN
+        IF NOT EXISTS (select *
+                       from information_schema.table_constraints
+                       where table_schema = 'controle'
+                         and table_name = 'time'
+                         and constraint_name = 'fk_time')
+        THEN
+            alter table if exists seguranca.jogador
+                add constraint fk_time foreign key (time_id) references controle.time ON DELETE SET NULL;
+        END IF;
+END $$ [42001-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.getSyntaxError(DbException.java:261)
+	at org.h2.command.ParserBase.getSyntaxError(ParserBase.java:750)
+	at org.h2.command.Parser.parsePrepared(Parser.java:773)
+	at org.h2.command.Parser.parse(Parser.java:592)
+	at org.h2.command.Parser.parse(Parser.java:569)
+	at org.h2.command.Parser.prepareCommand(Parser.java:483)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:639)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:559)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1166)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.flywaydb.core.internal.jdbc.JdbcTemplate.executeStatement(JdbcTemplate.java:210)
+	at org.flywaydb.core.internal.sqlscript.ParsedSqlStatement.execute(ParsedSqlStatement.java:89)
+	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:206)
+	... 63 more
+

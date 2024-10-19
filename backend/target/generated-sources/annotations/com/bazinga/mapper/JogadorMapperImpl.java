@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-08T17:30:11-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.3 (Oracle Corporation)"
+    date = "2024-10-15T18:31:02-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Amazon.com Inc.)"
 )
 @Component
 public class JogadorMapperImpl implements JogadorMapper {
@@ -58,6 +58,7 @@ public class JogadorMapperImpl implements JogadorMapper {
             jogador.setPerfil( Enum.valueOf( Perfil.class, dto.perfil() ) );
         }
         jogador.setLiderTime( dto.liderTime() );
+        jogador.setSenha( dto.senha() );
 
         return jogador;
     }
