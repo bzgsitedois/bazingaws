@@ -1,8 +1,10 @@
 
 .navbar {
+  min-height: 100px;
   background: linear-gradient(150deg, rgba(27, 67, 28, 1) 0%, rgba(55, 210, 58, 1) 16%, rgba(27, 71, 28, 1) 100%, rgba(0, 0, 0, 1) 100%);
 }
   .nome {
+    font-size: 2em;
     font-family: TF2Font, serif;
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
@@ -22,8 +24,9 @@
   }
 
   .hat-icon {
-    max-width: 1rem;  /* Ajusta o tamanho do chapéu */
-    height: 30px;
+    max-width: 2rem;  /* Tamanho maior do chapéu */
+    height: 40px;  /* Ajuste a altura também */
+
     margin-bottom: 5px;  /* Espaço entre o chapéu e o nome */
     opacity: 0;  /* Escondido inicialmente */
     transition: opacity 0.3s ease, transform 0.3s ease;
@@ -32,7 +35,7 @@
 
   &:hover .hat-icon, &.active .hat-icon {
     opacity: 1;  /* Mostra a imagem ao passar o mouse ou quando ativo */
-    transform: translateY(-15px);  /* Move para a posição normal */
+    transform: translateY(-20px);  /* Move para a posição normal */
   }
 
   .nome {
@@ -50,8 +53,21 @@
 }
 
 .icone {
+  font-size: 2rem;  /* Tamanho do ícone */
+  height: 3.5rem;   /* Ajuste a altura para evitar corte */
+  width: 3.5rem;    /* Largura para evitar corte */
+  line-height: 3.5rem;  /* Linha para centralizar o ícone */
+  padding: 0.5rem;  /* Adiciona espaçamento ao redor do ícone */
   transition: transform 0.5s ease;
 }
+.mat-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 4rem;  /* Altura maior para acomodar o ícone */
+  width: 4rem;   /* Largura maior */
+}
+
 
 .rotate-icon {
   transform: rotate(180deg);

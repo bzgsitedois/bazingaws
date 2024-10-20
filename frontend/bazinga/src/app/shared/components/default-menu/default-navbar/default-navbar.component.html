@@ -3,7 +3,7 @@
 
     <div class="navbar-brand">
       <a [routerLink]="'inicio'">
-        <img src="favicon.ico" alt="Logo" width="30" height="24">
+        <img src="favicon.ico" alt="Logo" width="60" height="48">
       </a>
     </div>
 
@@ -22,7 +22,7 @@
       </div>
     </div>
     <mat-icon
-      class="icone"
+      class="icone mat-icon-container"
       fontIcon="{{ mode === 'light' ? 'light_mode' : 'dark_mode' }}"
       style="cursor: pointer; color: white"
       [ngClass]="{ 'rotate-icon': mode === 'dark' }"
