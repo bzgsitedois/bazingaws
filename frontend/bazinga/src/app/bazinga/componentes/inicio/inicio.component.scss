@@ -1,20 +1,66 @@
 .camisa{
+  margin-top: 1em;
   position: relative;
   max-width: 1rem;
   margin-inline: auto;
+
+}
+
+.container-camisa{
+
 }
 
 .emVolta{
-  max-width: 30rem;
+  max-width: 40rem;
   position: absolute;
-  aspect-ratio: 1 / 1;
   object-fit: cover;
   margin-inline: auto;
+  animation: changeShadow 4s linear infinite; /* Adicionando animações */
 }
 
 .dentro{
-  max-width: 45rem;
+  max-width: 60rem;
   position: relative;
   z-index: 2;
-  margin-left: -10em;
+  margin-left: -17em;
+  transition: transform 0.5s ease-in-out , filter 0.2s ease-in-out;
+  filter: grayscale(40%) blur(2px) ; /* Aplica um desfoque de 5 pixels */
+
+  //mask-image: url("/assets/Davizord site splat2 - Copia.png");
+  //mask-size: contain;
+  //mask-repeat: repeat;
+  //mask-position: center;
+
+  &:hover{
+    mask-image: none;
+    transform: scale(1.05)
+    translate(-1em);
+    filter: none; /* Aplica um desfoque de 5 pixels */
+
+  }
+}
+
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes changeShadow {
+  0% {
+    filter: drop-shadow(16px 16px 20px var(--black-default)); /* Primeira cor */
+  }
+  33% {
+    filter: drop-shadow(16px 16px 20px var(--verdeFooter) ); /* Segunda cor */
+  }
+  66% {
+    filter: drop-shadow(16px 16px 20px var(--verdeFooter)); /* Terceira cor */
+  }
+  100% {
+    filter: drop-shadow(16px 16px 20px var(--black-default)); /* Volta para a primeira cor */
+  }
 }
