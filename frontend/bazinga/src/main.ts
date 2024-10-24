@@ -9,9 +9,9 @@ import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {provideToastr} from "ngx-toastr";
 import {APP_ROUTES} from "./app/app.routes";
 import {JwtModule} from "@auth0/angular-jwt";
+import { register as registerSwiperElements} from 'swiper/element/bundle';
 
-
-
+registerSwiperElements();
 bootstrapApplication(AppComponent, {
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},

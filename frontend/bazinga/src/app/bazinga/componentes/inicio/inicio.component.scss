@@ -6,40 +6,49 @@
 
 }
 
-.container-camisa{
+.teste{
+  min-height: 500px;
+}
 
+.container-camisa{
+  width: max-content;
+  position: absolute;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-items: center;
 }
 
 .emVolta{
-  max-width: 40rem;
-  position: absolute;
+  width: 33.7rem;
   object-fit: cover;
-  margin-inline: auto;
   animation: changeShadow 4s linear infinite; /* Adicionando animações */
+  grid-column: 1 / 1;
+  grid-row: 1 / 1;
 }
 
 .dentro{
-  max-width: 60rem;
+  max-width: 52.5rem;
   position: relative;
   z-index: 2;
-  margin-left: -17em;
-  transition: transform 0.5s ease-in-out , filter 0.2s ease-in-out;
+  transition: transform 0.5s ease-in-out , filter 0.2s ease-in-out, mask-image 1s ease-in-out;
   filter: grayscale(40%) blur(2px) ; /* Aplica um desfoque de 5 pixels */
+  mask-image: url("/assets/Davizord site splat2.png");
+  mask-size: contain;
+  mask-repeat: repeat;
+  mask-position: center;
 
-  //mask-image: url("/assets/Davizord site splat2 - Copia.png");
-  //mask-size: contain;
-  //mask-repeat: repeat;
-  //mask-position: center;
+  grid-column: 1 / 1;
+  grid-row: 1 / 1;
 
   &:hover{
     mask-image: none;
-    transform: scale(1.05)
-    translate(-1em);
+    transform: scale(1.05) translate(-1em);
     filter: none; /* Aplica um desfoque de 5 pixels */
 
   }
 }
-
 
 @keyframes rotate {
   from {
