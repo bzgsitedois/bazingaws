@@ -9,11 +9,11 @@ import {FooterComponent} from "../shared/components/footer/footer.component";
 
 
 @NgModule({
-  declarations: [HomeComponent,InicioComponent],
+  declarations: [HomeComponent],
   imports: [
     BazingaRoutingModule,
     CommonModule,
     DefaultNavbarComponent,
-    FooterComponent]
+    ]
 })
 export class BazingaModule { }
