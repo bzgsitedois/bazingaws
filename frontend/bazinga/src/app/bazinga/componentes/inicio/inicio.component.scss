@@ -5,6 +5,28 @@
   margin-right: 2em;
   margin-top: 1em;
 }
+.container-anuncio {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-inline: auto;
+}
+
+.title h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  font-family: Nunito , sans-serif;
+}
+
+.slogan {
+  font-size: 1.2rem;
+}
 
 .container-camisa {
   position: relative;
@@ -49,20 +71,9 @@
   }
 }
 
-::ng-deep .swiper-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-::ng-deep .swiper-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .dentro {
-  margin-left: 100px;
   max-width: 25rem;
   transition: transform 0.5s ease-in-out, filter 0.2s ease-in-out, mask-image 1s ease-in-out;
   grid-column: 1 / 1;
@@ -70,6 +81,50 @@
   &:hover {
     transform: scale(1.05);
     filter: none;
+  }
+}
+
+.relative.mx-auto {
+  display: flex;
+  justify-content: center;
+  width: 100px;
+
+}
+
+.creditos{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  h1{
+    font-family: Calibri , sans-serif;
+    font-size: 2em;
+  }
+}
+
+.container-pessoas {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+
+.circle {
+  position: relative;
+  border-radius: 100rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+.circle_img {
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+}
+
+.person_img {
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+  &:hover{
+    scale: 1.5;
   }
 }
 
@@ -96,3 +151,4 @@
     filter: drop-shadow(16px 16px 20px var(--black-default)); /* Volta para a primeira cor */
   }
 }
+

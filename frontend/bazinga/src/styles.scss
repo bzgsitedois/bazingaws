@@ -1,6 +1,9 @@
 @import 'bootstrap';
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import 'swiper/swiper-bundle.css';
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
 
 //TODO: testar como funciona o material , olhar o do legacy
 :root {
@@ -29,16 +32,35 @@ html {
   font-size: 20px;
 }
 
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: green;
+  border-radius: 10px;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3); /* Sombra interna */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: transparent;
+}
+
 body {
   margin: 0;
   font-family: Nunito, Roboto, sans-serif !important;
   transition: background-color 0.5s ease, color 0.5s ease;
-  overflow: hidden;
 }
 
 .light-mode {
   background-color: #fff;
-  color: #000;
+  color: #2d2d2d;
 }
 
 .dark-mode {

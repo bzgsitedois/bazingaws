@@ -1,7 +1,8 @@
 import {AfterViewInit, Component, CUSTOM_ELEMENTS_SCHEMA, OnInit} from '@angular/core';
 import {FooterComponent} from "../../../shared/components/footer/footer.component";
-import {NgClass} from "@angular/common";
+import {NgClass, NgOptimizedImage} from "@angular/common";
 import Swiper from "swiper";
+import {CarouselModule} from "primeng/carousel";
 
 @Component({
   selector: 'app-inicio',
@@ -10,27 +11,37 @@ import Swiper from "swiper";
   standalone: true,
   imports: [
     FooterComponent,
-    NgClass
+    NgClass,
+    CarouselModule,
+    NgOptimizedImage
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 
 
-export class InicioComponent implements AfterViewInit {
+export class InicioComponent implements AfterViewInit{
   maskApplied = false;
   filterApplied = false;
+  products = [
+    { name: 'Camisa Modelo 1', image: 'assets/imagemcamisa2.png' },
+    { name: 'Camisa Modelo 2', image: 'assets/imagemcamisa2.png' }
+  ];
   ngAfterViewInit() {
-    new Swiper('.slider-mask', {
-      autoplay: {
-        delay: 3000,
-      },
-      loop: true,
-    });
-
-    // Aplicando a máscara após um tempo
     setTimeout(() => {
       this.maskApplied = true;
-      this.filterApplied = true;
     }, 3000);
   }
+
+  onCarouselChange() {
+    this.maskApplied = false;
+
+    setTimeout(() => {
+      this.maskApplied = true;
+    }, 3000);
+  }
+
+
+
+
+  constructor() {}
 }

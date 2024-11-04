@@ -1,16 +1,49 @@
-
-<div class="camisa">
-  <div class="container-camisa">
-    <img class="emVolta" src="assets/Davizord%20site%20splat2.png" alt="">
-    <swiper-container class="slider-mask" [ngClass]="{'mask-active': maskApplied}">
-      <swiper-slide>
-        <div class="teste">
-        <img class="dentro" src="assets/3d_male_t_shirt_crew_neck_short_sleeve_esport_design_01.png" alt="Camisa"></div>
-      </swiper-slide>
-      <swiper-slide>
-        <img class="dentro" src="assets/3d_male_t_shirt_crew_neck_short_sleeve_esport_design_01.png" alt="Camisa">
-      </swiper-slide>
-    </swiper-container>
+<div class="container-anuncio">
+  <div class="title">
+    <h1>NOVOS MODELOS BAZINGA</h1>
+    <span class="slogan">Seja o main character!</span>
+  </div>
+  <div class="camisa">
+    <div class="container-camisa">
+      <img class="emVolta" src="assets/Davizord%20site%20splat2.png" alt="">
+      <p-carousel class="slider-mask" [ngClass]="{'mask-active': maskApplied}" [showIndicators]="false"
+                  [showNavigators]="false"
+                  [value]="products" [numVisible]="1" [numScroll]="1" [circular]="true" autoplayInterval="10000"
+                  (onPage)="onCarouselChange()">
+        <ng-template let-product pTemplate="item">
+          <div class="border-1 surface-border border-round m-2 p-3">
+            <div class="mb-3">
+              <div class="relative mx-auto">
+                <img src="assets/imagemcamisa2.png"
+                     [alt]="product.name"
+                     class="dentro"/>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
   </div>
 </div>
+
+<div class="creditos">
+  <h1>Créditos para:</h1>
+</div>
+  <div class="container-pessoas">
+    <div class="circle">
+      <img ngSrc="favicon.ico" width="200" height="200" class="circle_img">
+      <img ngSrc="assets/IMG-20240819-WA0020%20(1)_processed_processed.jpg" class="person_img" width="200" height="200">
+    </div>
+    <div class="circle">
+      <img ngSrc="favicon.ico" width="200" height="200" class="circle_img">
+      <img ngSrc="assets/IMG-20240819-WA0020%20(1)_processed_processed.jpg" class="person_img" width="200" height="200">
+    </div>
+    <div class="circle">
+      <img ngSrc="favicon.ico" width="200" height="200" class="circle_img">
+      <img ngSrc="assets/IMG-20240819-WA0020%20(1)_processed_processed.jpg" class="person_img" width="200" height="200">
+    </div>
+  </div>
+
+
+
 <app-footer></app-footer>
