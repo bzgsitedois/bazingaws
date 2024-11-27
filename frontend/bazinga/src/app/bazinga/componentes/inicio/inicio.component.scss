@@ -73,7 +73,6 @@
 }
 
 
-
 .dentro {
   max-width: 25rem;
   transition: transform 0.5s ease-in-out, filter 0.2s ease-in-out, mask-image 1s ease-in-out;
@@ -132,6 +131,50 @@
     scale: 1.5;
   }
 }
+
+
+
+.yoda{
+  width:200px;
+  aspect-ratio:9/16;
+  outline: 3px solid limegreen;
+  background-image: url("/assets/yoda.jpg");
+  background-position:center;
+  background-size: cover;
+  position: relative;
+  //perspective: 1000px;
+  transition: transform 1s ease;
+  &:hover {
+    //rotate: x 75deg;
+    transform: rotateX(-55deg);
+  }
+}
+
+.front-image{
+  position:relative;
+}
+
+.yoda > *{
+  opacity: 0;
+  position: absolute;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @keyframes rotate {
   from {
