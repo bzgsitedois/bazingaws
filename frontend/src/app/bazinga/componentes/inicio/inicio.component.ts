@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, CUSTOM_ELEMENTS_SCHEMA, OnInit} from '@angular/core';
 import {FooterComponent} from "../../../shared/components/footer/footer.component";
 import {NgClass, NgOptimizedImage} from "@angular/common";
-import Swiper from "swiper";
 import {CarouselModule} from "primeng/carousel";
 
 @Component({

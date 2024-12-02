@@ -1,8 +1,8 @@
 import {Component, Input, Renderer2} from '@angular/core';
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {DefaultMenuList} from "../../../types/default-menu-list";
-import {MatIcon} from "@angular/material/icon";
 import {NgClass, NgOptimizedImage} from "@angular/common";
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-default-navbar',
