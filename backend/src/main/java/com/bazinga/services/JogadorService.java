@@ -5,6 +5,7 @@ import com.bazinga.dto.JogadorDTOs.*;
 import com.bazinga.entity.ClasseTFEntity;
 import com.bazinga.entity.Jogador;
 import com.bazinga.entity.Time;
+import com.bazinga.entity.enums.Perfil;
 import com.bazinga.exception.JogadorNaoEncontradoException;
 import com.bazinga.mapper.JogadorMapper;
 import com.bazinga.repository.ClasseRepository;
@@ -182,6 +183,7 @@ public class JogadorService {
                     .orElseThrow(() -> new EntityNotFoundException("Jogo não encontrada com o id: " + id));
             entity.getClasses().add(classe);
         }
+        entity.setPerfil(Perfil.JOGADOR);
         entity.setLiderTime(false);
         entity.setSenha(passwordEncoder.encode(dto.senha()));
 
