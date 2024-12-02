@@ -16,4 +16,8 @@ export const menuOptions: DefaultMenuList[] = [
     menuName: "Times",
     route: environment.PREFIX_BASE + "/times",
   },
+  {
+    menuName: "Produtos",
+    route: environment.PREFIX_BASE + "/produtos",
+  },
 ];
