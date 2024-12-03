@@ -1,3 +1,8 @@
-<form fo></form>
-<input formControlName="">
 
+<div class="card-body">
+  <label [for]="id()">{{ label() }}</label>
+  <span>
+  <input type="text" [formControlName]="formaControlName()" pInputText  [placeholder]="placeholder()" [variant]="variant()">
+</span>
+  <ng-content></ng-content>
+</div>

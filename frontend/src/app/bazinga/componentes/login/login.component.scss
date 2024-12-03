@@ -2,8 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
 
-
-
 h1 {
   color: var(--purewhite);
   font-weight: bold;
@@ -85,10 +83,21 @@ input {
   0 10px 10px rgba(0,0,0,0.22);
   position: relative;
   overflow: hidden;
-  width: 768px;
-  max-width: 100%;
-  min-height: 480px;
+  width: 80%; /* Ajustado para ocupar 80% da largura do viewport */
+  min-height: 480px; /* Altura mínima garantida */
+  margin-top: auto;
+  margin-bottom: auto;
 }
+
+
+  .total {
+    background-color: #373737;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
 
 .form-container {
   position: absolute;
@@ -149,7 +158,6 @@ input {
 }
 
 .overlay {
-  background: #FF416C;
   background: -webkit-linear-gradient(150deg, rgba(27, 67, 28, 1) 0%,#22b70f 16%, rgba(27, 71, 28, 1) 100%, rgba(0, 0, 0, 1) 100%);
   background: linear-gradient(150deg, rgba(27, 67, 28, 1) 0%,#22b70f 16%, rgba(27, 71, 28, 1) 100%, rgba(0, 0, 0, 1) 100%);
   background-repeat: no-repeat;
@@ -239,3 +247,26 @@ footer a {
   color: #3c97bf;
   text-decoration: none;
 }
+
+.form-container,
+.overlay-container {
+  width: 50%; /* Mantém proporções */
+  height: 100%; /* Altura total do container */
+}
+
+.overlay {
+  width: 200%; /* Ocupa largura suficiente para transições */
+  height: 100%; /* Ajusta a altura proporcional ao container */
+}
+
+.overlay-panel {
+  width: 50%; /* Painel ocupa metade do overlay */
+  height: 100%; /* Altura proporcional ao container */
+}
+
+.sign-in-container,
+.sign-up-container {
+  width: 50%; /* Ambos os containers ocupam metade da largura */
+  height: 100%; /* Altura proporcional ao container */
+}
+
