@@ -83,8 +83,8 @@ input {
   0 10px 10px rgba(0,0,0,0.22);
   position: relative;
   overflow: hidden;
-  width: 80%; /* Ajustado para ocupar 80% da largura do viewport */
-  min-height: 480px; /* Altura mínima garantida */
+  width: 80%;
+  min-height: 480px;
   margin-top: auto;
   margin-bottom: auto;
 }
@@ -250,23 +250,29 @@ footer a {
 
 .form-container,
 .overlay-container {
-  width: 50%; /* Mantém proporções */
-  height: 100%; /* Altura total do container */
+  width: 50%;
+  height: 100%;
 }
 
 .overlay {
-  width: 200%; /* Ocupa largura suficiente para transições */
-  height: 100%; /* Ajusta a altura proporcional ao container */
+  width: 200%;
+  height: 100%;
 }
 
 .overlay-panel {
-  width: 50%; /* Painel ocupa metade do overlay */
-  height: 100%; /* Altura proporcional ao container */
+  width: 50%;
+  height: 100%;
 }
 
 .sign-in-container,
 .sign-up-container {
-  width: 50%; /* Ambos os containers ocupam metade da largura */
-  height: 100%; /* Altura proporcional ao container */
+  width: 50%;
+  height: 100%;
 }
 
+::ng-deep .custom-snackbar .mdc-button__label {
+  color: green;
+}
+::ng-deep .p-inputtext {
+  width: 100%;
+}

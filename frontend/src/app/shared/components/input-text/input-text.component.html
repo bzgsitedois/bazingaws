@@ -1,8 +1,8 @@
 
 <div class="card-body">
-  <label [for]="id()">{{ label() }}</label>
-  <span>
-  <input type="text" [formControlName]="formaControlName()" pInputText  [placeholder]="placeholder()" [variant]="variant()">
-</span>
+  <p-floatLabel>
+  <input [id]="id()" type="text" [formControlName]="formaControlName()" pInputText  [placeholder]="placeholder()" [variant]="variant()">
+    <label [for]="id()">{{ label() }}</label>
+  </p-floatLabel>
   <ng-content></ng-content>
 </div>

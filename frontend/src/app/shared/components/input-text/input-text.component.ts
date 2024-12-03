@@ -1,6 +1,7 @@
 import {Component, inject, input} from '@angular/core';
 import {InputTextModule} from "primeng/inputtext";
 import {ControlContainer, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FloatLabelModule} from 'primeng/floatlabel';
 
 @Component({
   selector: 'app-input-text',
@@ -8,6 +9,7 @@ import {ControlContainer, FormsModule, ReactiveFormsModule} from "@angular/forms
   imports: [
     InputTextModule,
     ReactiveFormsModule,
+    FloatLabelModule,
 
   ],viewProviders: [
     {

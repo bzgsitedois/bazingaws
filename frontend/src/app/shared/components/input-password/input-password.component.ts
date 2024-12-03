@@ -2,6 +2,7 @@ import {Component, inject, input} from '@angular/core';
 import {InputTextModule} from 'primeng/inputtext';
 import {ControlContainer, ReactiveFormsModule} from '@angular/forms';
 import {PasswordModule} from 'primeng/password';
+import {FloatLabelModule} from 'primeng/floatlabel';
 
 @Component({
   selector: 'app-input-password',
@@ -9,7 +10,8 @@ import {PasswordModule} from 'primeng/password';
   imports: [
     InputTextModule,
     ReactiveFormsModule,
-    PasswordModule
+    PasswordModule,
+    FloatLabelModule
   ],viewProviders: [
     {
       provide: ControlContainer,
@@ -22,4 +24,6 @@ import {PasswordModule} from 'primeng/password';
 export class InputPasswordComponent {
   formaControlName = input('')
   placeholder = input('')
+  id = input('')
+  label = input('')
 }

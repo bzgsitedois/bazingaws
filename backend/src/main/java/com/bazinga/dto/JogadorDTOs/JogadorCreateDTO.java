@@ -1,5 +1,6 @@
 package com.bazinga.dto.JogadorDTOs;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -7,19 +8,23 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 public record JogadorCreateDTO(
-        @NotEmpty @NotNull @NotBlank
-        Long id,
-        @NotEmpty @NotNull @NotBlank
+
+        @NotBlank
         String nome,
-        @NotEmpty @NotNull @NotBlank
+
+        @NotBlank
+        @Email
         String email,
-        @NotEmpty @NotNull @NotBlank
+
+        @NotBlank
         String senha,
-        @NotEmpty @NotNull @NotBlank
+
         String perfil,
+
         String fotoPath,
         List<Long> classesId,
         Long time_id,
         Boolean liderTime
 ) {
 }
+

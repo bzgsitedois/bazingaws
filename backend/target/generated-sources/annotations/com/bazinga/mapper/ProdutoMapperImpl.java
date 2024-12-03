@@ -1,6 +1,5 @@
 package com.bazinga.mapper;
 
-import com.bazinga.dto.ProdutoDTOs.ProdutoCreateDTO;
 import com.bazinga.dto.ProdutoDTOs.ProdutoProjectionDTO;
 import com.bazinga.entity.Produto;
 import java.util.List;
@@ -9,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-19T01:09:12-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Amazon.com Inc.)"
+    date = "2024-12-03T16:37:27-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.5 (Amazon.com Inc.)"
 )
 @Component
 public class ProdutoMapperImpl implements ProdutoMapper {
@@ -32,7 +31,7 @@ public class ProdutoMapperImpl implements ProdutoMapper {
         String fotoPath = null;
         int quantidade = 0;
 
-        tamanho = mapTamanho( produto.getTamanho() );
+        tamanho = mapClasses( produto.getTamanho() );
         id = produto.getId();
         nome = produto.getNome();
         logo = produto.getLogo();
@@ -46,26 +45,5 @@ public class ProdutoMapperImpl implements ProdutoMapper {
         ProdutoProjectionDTO produtoProjectionDTO = new ProdutoProjectionDTO( id, nome, logo, preco, desconto, frete, materiais, tamanho, fotoPath, quantidade );
 
         return produtoProjectionDTO;
-    }
-
-    @Override
-    public Produto toProduto(ProdutoCreateDTO produtoCreateDTO) {
-        if ( produtoCreateDTO == null ) {
-            return null;
-        }
-
-        Produto produto = new Produto();
-
-        produto.setId( produtoCreateDTO.id() );
-        produto.setNome( produtoCreateDTO.nome() );
-        produto.setQuantidade( produtoCreateDTO.quantidade() );
-        produto.setPreco( produtoCreateDTO.preco() );
-        produto.setDesconto( produtoCreateDTO.desconto() );
-        produto.setFrete( produtoCreateDTO.frete() );
-        produto.setLogo( produtoCreateDTO.logo() );
-        produto.setMateriais( produtoCreateDTO.materiais() );
-        produto.setFotoPath( produtoCreateDTO.fotoPath() );
-
-        return produto;
     }
 }

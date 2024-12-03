@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -54,7 +55,7 @@ public class JogadorController {
     @PostMapping
     private ResponseEntity<?> newEntity(@RequestBody @Valid JogadorCreateDTO dto) {
         jogadorService.newEntity(dto);
-        return new ResponseEntity<>("Jogador Criado", HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "Jogador Criado"));
     }
 
     @PutMapping("/{id}")

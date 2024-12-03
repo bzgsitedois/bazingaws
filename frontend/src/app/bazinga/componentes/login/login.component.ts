@@ -8,6 +8,8 @@ import {NgForOf, NgIf} from '@angular/common';
 import {ButtonDirective} from 'primeng/button';
 import {ActivatedRoute} from '@angular/router';
 import {JogadorService} from '../../../service/jogador/jogador.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {AuthService} from '../../../service/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -29,8 +31,10 @@ export class LoginComponent {
 
   private route: ActivatedRoute = inject(ActivatedRoute);
   private service: JogadorService = inject(JogadorService);
+  private authService: AuthService = inject(AuthService);
 
-
+  constructor(private snackBar: MatSnackBar) {
+  }
 
   isRightPanelActive = false;
 
@@ -39,15 +43,15 @@ export class LoginComponent {
   }
 
   cadastrar = new FormGroup({
-    nome: new FormControl<string|undefined>('',  {nonNullable: true, validators: [Validators.required]}),
-    email: new FormControl<string|undefined>('', {nonNullable: true, validators: [Validators.required]}),
-    senha: new FormControl<string|undefined>('', {nonNullable: true, validators: [Validators.required]}),
-    classesId: new FormControl<number[]|undefined>(undefined, {nonNullable: true}),
+    nome: new FormControl<string | undefined>('', {nonNullable: true, validators: [Validators.required]}),
+    email: new FormControl<string | undefined>('', {nonNullable: true, validators: [Validators.required]}),
+    senha: new FormControl<string | undefined>('', {nonNullable: true, validators: [Validators.required]}),
+    classesId: new FormControl<number[] | undefined>([], {nonNullable: true}),
   })
 
   login = new FormGroup({
-    email: new FormControl('', [Validators.required]),
-    senha: new FormControl('', [Validators.required])
+    login: new FormControl<string | undefined>('', {nonNullable: true, validators: [Validators.required]}),
+    senha: new FormControl<string | undefined>('', {nonNullable: true, validators: [Validators.required]})
   })
 
 
@@ -55,28 +59,55 @@ export class LoginComponent {
     {label: 'Scout', value: 1},
     {label: 'Heavy', value: 2},
     {label: 'Engineer', value: 3},
-    {label: 'Pyro', value: 4}  ,
-    {label: 'Demoman', value:5 },
-    {label: 'Soldier', value:6 },
-    {label: 'Medic', value:7 },
-    {label: 'Soldier', value:8 },
-    {label: 'Spy', value:9 },
+    {label: 'Pyro', value: 4},
+    {label: 'Demoman', value: 5},
+    {label: 'Soldier', value: 6},
+    {label: 'Medic', value: 7},
+    {label: 'Soldier', value: 8},
+    {label: 'Spy', value: 9},
   ];
 
-salvar(){
-  const formData = this.cadastrar.getRawValue();
+  salvar() {
+    const formData = this.cadastrar.getRawValue();
 
-  console.log("Criado com dados formatados:");
-  console.log(formData);
+    this.service.criarUsuario(formData).subscribe({
+      next: (res) => {
+        this.snackBar.open("Jogador criado com sucesso!", "Fechar", {
+          duration: 3000,
+          panelClass: ['custom-snackbar']
+        });
+      },
+      error: (err) => {
+        console.error("Erro ao criar jogador:", err);
+        this.snackBar.open("Erro ao criar jogador!", "Fechar", {
+          duration: 3000,
+          panelClass: ['custom-snackbar']
+        });
+      }
+    });
+  }
 
-  this.service.criarUsuario(formData).subscribe({
-    next: (res) => {
-      console.log("Preço criado com sucesso:", res);
-    },
-    error: (err) => {
-      console.error("Erro ao criar preço:", err);
-    }
-  });
 
+  logar() {
+    const formData = this.login.getRawValue();
+
+
+    this.authService.login(formData).subscribe({
+      next: (res) => {
+        this.snackBar.open("Logado com sucesso!", "Fechar", {
+          duration: 3000,
+          panelClass: ['custom-snackbar']
+        });
+      },
+      error: (err) => {
+        console.error("Erro ao criar jogador:", err);
+        this.snackBar.open("Erro ao logar!", "Fechar", {
+          duration: 3000,
+          panelClass: ['custom-snackbar']
+        });
+      }
+    });
+  }
 }
-}
+
+

@@ -3,28 +3,20 @@
   <div class="form-container sign-up-container">
     <form [formGroup]="cadastrar">
       <h1>Criar Conta</h1>
-      <app-input-text placeholder="Nome" formaControlName="nome"></app-input-text>
-      <app-input-text placeholder="Email" formaControlName="email"></app-input-text>
-      <app-input-password placeholder="Senha" formaControlName="senha"></app-input-password>
-      <p-multiSelect
-        [options]="classes"
-        display="chip"
-        formControlName="classesId"
-        placeholder="Selecione suas classes"
-        optionLabel="label"
-        optionValue="value">
-      </p-multiSelect>
+      <app-input-text id="nome" label="Nome" style="width: 100%;"  formaControlName="nome"></app-input-text>
+      <app-input-text id="email" label="Email" style="width: 100%;"  formaControlName="email"></app-input-text>
+      <app-input-password id="senha" label="Senha" style="width: 100%;"  formaControlName="senha"></app-input-password>
 
       <button pButton type="button" (click)="salvar()">Cadastrar</button>
     </form>
   </div>
   <div class="form-container sign-in-container">
-    <form formControlName="login">
+    <form [formGroup]="login">
       <h1>Login</h1>
-      <input type="email" placeholder="Email" />
-      <input type="password" placeholder="Senha" />
+      <app-input-text id="emailLogin" label="Email" style="width: 100%;"  formaControlName="login"></app-input-text>
+      <app-input-password id="senhaLogin" label="Senha" style="width: 100%;"  formaControlName="senha"></app-input-password>
       <a href="#">Esqueceu sua senha?</a>
-      <button type="button">Entrar</button>
+      <button pButton type="button" (click)="logar()">Entrar</button>
     </form>
   </div>
   <div class="overlay-container">

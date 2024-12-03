@@ -2,6 +2,7 @@ package com.bazinga.entity;
 
 import com.bazinga.entity.enums.Perfil;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +19,7 @@ public class Jogador implements UserDetails {
 
     private String nome;
 
+    @Email
     private String email;
 
     private String senha;
