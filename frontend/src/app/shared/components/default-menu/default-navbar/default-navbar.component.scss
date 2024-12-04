@@ -73,3 +73,19 @@
   transform: rotate(180deg);
 }
 
+
+.optionsDropdown{
+  word-wrap: break-word;
+  word-break: break-word;
+  width: fit-content;
+  position: absolute;
+  right: 0;
+  top: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  z-index: 2000;
+  max-height: 60vh;
+  overflow-y: auto;
+  border-radius: 10px;
+
+}

@@ -22,6 +22,7 @@ public interface TimeRepository extends BaseRepository<Time>{
 
     @Query("SELECT t.nome FROM Time t JOIN Jogador j ON t.id = j.time.id WHERE j.id = :id")
     String findNomeDoTimeByJogadorId(@Param("id") Long id);
+
 }
 
 

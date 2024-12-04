@@ -16,9 +16,11 @@ export class AuthService {
 
 
 
-  login(user: Partial<LoginDTO>): Observable<LoginDTO> {
-    return this.http.post<LoginDTO>(this.authApi+'/login', user);
+  login(user: Partial<LoginDTO>): Observable<string> {
+    return this.http.post(this.authApi + '/login', user, { responseType: 'text' });
   }
+
+
 
 
 

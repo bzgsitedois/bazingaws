@@ -35,6 +35,7 @@ public interface TimeMapper {
     }
 
     @Mapping(target = "jogos", ignore = true)
+    @Mapping(target = "fotoPath", source = "foto_path")
     Time toEntity(TimeCreateDTO dto);
 
     default TimeListAllDTO toTimeListAllDTO(Time time, List<String> lideresNomes , int num_jogadores) {

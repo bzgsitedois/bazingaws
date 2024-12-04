@@ -6,10 +6,11 @@ import {DropdownModule} from 'primeng/dropdown';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {NgForOf, NgIf} from '@angular/common';
 import {ButtonDirective} from 'primeng/button';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {JogadorService} from '../../../service/jogador/jogador.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AuthService} from '../../../service/auth/auth.service';
+import {TokenService} from '../../../service/token/token.service';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,8 @@ export class LoginComponent {
   private route: ActivatedRoute = inject(ActivatedRoute);
   private service: JogadorService = inject(JogadorService);
   private authService: AuthService = inject(AuthService);
-
+  private tokenService: TokenService = inject(TokenService);
+  private router: Router = inject(Router)
   constructor(private snackBar: MatSnackBar) {
   }
 
@@ -72,18 +74,36 @@ export class LoginComponent {
 
     this.service.criarUsuario(formData).subscribe({
       next: (res) => {
-        this.snackBar.open("Jogador criado com sucesso!", "Fechar", {
-          duration: 3000,
-          panelClass: ['custom-snackbar']
+        const jogador = {
+          login: this.cadastrar.get('email')?.value,
+          senha: this.cadastrar.get('senha')?.value,
+        };
+
+        this.authService.login(jogador).subscribe({
+          next: (token: string) => {
+            this.tokenService.saveToken(token);
+            this.router.navigate(['/']);
+            this.snackBar.open('Jogador criado e logado com sucesso!', 'Fechar', {
+              duration: 3000,
+              panelClass: ['custom-snackbar'],
+            });
+          },
+          error: (err) => {
+            console.error('Erro ao realizar login após cadastro:', err);
+            this.snackBar.open('Erro ao logar após cadastro!', 'Fechar', {
+              duration: 3000,
+              panelClass: ['custom-snackbar'],
+            });
+          },
         });
       },
       error: (err) => {
-        console.error("Erro ao criar jogador:", err);
-        this.snackBar.open("Erro ao criar jogador!", "Fechar", {
+        console.error('Erro ao criar jogador:', err);
+        this.snackBar.open('Erro ao criar jogador!', 'Fechar', {
           duration: 3000,
-          panelClass: ['custom-snackbar']
+          panelClass: ['custom-snackbar'],
         });
-      }
+      },
     });
   }
 
@@ -91,23 +111,26 @@ export class LoginComponent {
   logar() {
     const formData = this.login.getRawValue();
 
-
     this.authService.login(formData).subscribe({
-      next: (res) => {
-        this.snackBar.open("Logado com sucesso!", "Fechar", {
+      next: (token: string) => {
+        this.tokenService.saveToken(token);
+        this.router.navigate(['/']);
+        this.snackBar.open('Logado com sucesso!', 'Fechar', {
           duration: 3000,
-          panelClass: ['custom-snackbar']
+          panelClass: ['custom-snackbarLogin'],
         });
       },
       error: (err) => {
-        console.error("Erro ao criar jogador:", err);
-        this.snackBar.open("Erro ao logar!", "Fechar", {
+        console.error('Erro ao logar:', err);
+        this.snackBar.open('Erro ao logar!', 'Fechar', {
           duration: 3000,
-          panelClass: ['custom-snackbar']
+          panelClass: ['custom-snackbarLogin'],
         });
-      }
+      },
     });
   }
+
+
 }
 
 

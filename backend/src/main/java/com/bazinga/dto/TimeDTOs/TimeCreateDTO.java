@@ -5,14 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 public record TimeCreateDTO (
-        @NotEmpty @NotNull @NotBlank
-        Long id,
-        @NotEmpty @NotNull @NotBlank
-        String nome,
-        @NotEmpty @NotNull @NotBlank
-        String descricao,
-        @NotEmpty @NotNull @NotBlank
-        List<Long> jogoId,
+        @NotBlank String nome,
+        @NotBlank String descricao,
+        @NotEmpty List<Long> jogoId,
         String foto_path
 ){
 }

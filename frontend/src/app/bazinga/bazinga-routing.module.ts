@@ -2,9 +2,9 @@ import {NgModule, Output} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
 import {InicioComponent} from "./componentes/inicio/inicio.component";
 import {HomeComponent} from "./componentes/home/home.component";
-import {JogadoresComponent} from "./componentes/jogadores/jogadores.component";
 import {TimesComponent} from "./componentes/times/times.component";
 import {LoginComponent} from "./componentes/login/login.component";
+import {JogadorListComponent} from './componentes/jogadores/jogador-list/jogador-list.component';
 
 const routes: Routes = [
   {
@@ -13,7 +13,7 @@ const routes: Routes = [
     children: [
       {path: '', redirectTo: 'inicio', pathMatch: 'full'},
       {path: 'inicio', component: InicioComponent},
-      {path: 'jogadores', component: JogadoresComponent},
+      {path: 'jogadores', component: JogadorListComponent},
       {path: 'times', component: TimesComponent}],
 
   },

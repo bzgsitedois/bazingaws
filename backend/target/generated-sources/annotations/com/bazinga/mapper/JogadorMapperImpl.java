@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-15T18:31:02-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Amazon.com Inc.)"
+    date = "2024-12-04T17:12:01-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.5 (Amazon.com Inc.)"
 )
 @Component
 public class JogadorMapperImpl implements JogadorMapper {
@@ -50,7 +50,6 @@ public class JogadorMapperImpl implements JogadorMapper {
 
         Jogador jogador = new Jogador();
 
-        jogador.setId( dto.id() );
         jogador.setNome( dto.nome() );
         jogador.setEmail( dto.email() );
         jogador.setFotoPath( dto.fotoPath() );

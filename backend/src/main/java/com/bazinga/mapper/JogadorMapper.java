@@ -36,6 +36,7 @@ public interface JogadorMapper {
                 jogador.getNome(),
                 jogador.getFotoPath(),
                 classesIds,
+                jogador.getTime() != null ? jogador.getTime().getId() : null,
                 timeNome,
                 jogador.getLiderTime()
         );

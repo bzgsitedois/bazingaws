@@ -11,12 +11,16 @@ export class JogadorService {
 
   private http: HttpClient = inject(HttpClient);
 
-  private loginApi = environment.URL_BASE + 'jogador';
+  private api = environment.URL_BASE + 'jogador';
 
 
 
   criarUsuario(user: Partial<JogadorCreateDTO>): Observable<JogadorCreateDTO> {
-    return this.http.post<JogadorCreateDTO>(this.loginApi, user);
+    return this.http.post<JogadorCreateDTO>(this.api, user);
+  }
+
+  listarJogadores(page: number, size: number): Observable<any> {
+    return this.http.post<any>(`${this.api+"/listAll"}?page=${page}&size=${size}`, {});
   }
 
 

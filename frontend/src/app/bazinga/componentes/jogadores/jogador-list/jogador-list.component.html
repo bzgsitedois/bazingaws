@@ -1,0 +1,32 @@
+<div class="flex align-items-center justify-content-end mt-3">
+  <p-paginator
+    [first]="first"
+    [rows]="rows"
+    [rowsPerPageOptions]="[10, 20, 30]"
+    [totalRecords]="totalRecords"
+    (onPageChange)="onPageChange($event)"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="{first} - {last} de {totalRecords}"
+  ></p-paginator>
+</div>
+
+<div class="grid">
+  <div *ngFor="let jogador of jogadores" class="card col-12 md:col-6 lg:col-4">
+    <p-card [header]="jogador.nome || 'Sem Nome'" [subheader]="jogador.timeNome || 'Sem Time'" [style]="{ width: '360px' }">
+      <ng-template pTemplate="header">
+        <img [src]="'assets/FotoUsuario/' + jogador.id + '.jpg'" alt="Foto do Jogador" />
+        <img [src]="'assets/FotoTime/' + jogador.timeId + '.jpg'" alt="Foto do Jogador" />
+      </ng-template>
+      <p>
+        <b>ID:</b> {{ jogador.id }} <br />
+        <b>Classes:</b> {{ jogador.classeIds.join(', ') || 'Nenhuma Classe' }}
+      </p>
+      <ng-template pTemplate="footer">
+        <div class="flex gap-3 mt-1">
+          <p-button label="Detalhes" severity="secondary" class="detalhe w-full" styleClass="detalhe w-full"></p-button>
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+</div>
+

@@ -270,9 +270,11 @@ footer a {
   height: 100%;
 }
 
-::ng-deep .custom-snackbar .mdc-button__label {
-  color: green;
+::ng-deep .custom-snackbar .mdc-button__label,
+::ng-deep .custom-snackbarLogin .mdc-button__label {
+  color: green !important;
 }
+
 ::ng-deep .p-inputtext {
   width: 100%;
 }

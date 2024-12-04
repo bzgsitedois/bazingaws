@@ -7,6 +7,7 @@ public record JogadorListAllDTO(
         String nome,
         String fotoPath,
         List<Long> classeIds,
+        Long timeId,
         String timeNome,
         Boolean liderTime
 ) {

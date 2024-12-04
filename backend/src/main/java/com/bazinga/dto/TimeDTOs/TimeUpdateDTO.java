@@ -6,11 +6,11 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 public record TimeUpdateDTO (
 
-        @NotEmpty @NotNull @NotBlank
+        @NotBlank
         String nome,
-        @NotEmpty @NotNull @NotBlank
+       @NotBlank
         String descricao,
-        @NotEmpty @NotNull @NotBlank
+        @NotEmpty
         List<Long> jogoId,
         String foto_path
 ){

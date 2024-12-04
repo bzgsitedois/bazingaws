@@ -26,7 +26,6 @@ public class Time {
             joinColumns = @JoinColumn(name = "time_id"),
             inverseJoinColumns = @JoinColumn(name = "jogo_id")
     )
-    @Enumerated(EnumType.STRING)
     private Set<JogoEntity> jogos = new HashSet<>();
 
     private String fotoPath;

@@ -21,6 +21,17 @@
     }
       </div>
     </div>
+    <span>
+    <mat-icon
+      class="icone mat-icon-container"
+      fontIcon="person"
+      style="cursor: pointer; color: white"
+      (click)="toggleMenu($event, menu)">
+</mat-icon>
+
+<p-overlayPanel #menu>
+  <p-menu [model]="opcoesMenu"></p-menu>
+</p-overlayPanel></span>
     <mat-icon
       class="icone mat-icon-container"
       fontIcon="{{ mode === 'light' ? 'light_mode' : 'dark_mode' }}"
