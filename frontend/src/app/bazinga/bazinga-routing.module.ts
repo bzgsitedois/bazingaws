@@ -13,7 +13,11 @@ const routes: Routes = [
     children: [
       {path: '', redirectTo: 'inicio', pathMatch: 'full'},
       {path: 'inicio', component: InicioComponent},
-      {path: 'jogadores', component: JogadorListComponent},
+      {
+        path: 'jogadores',
+        // canActivate: [authGuard],
+        loadChildren: () => import('./componentes/jogadores/jogador.routes').then((r) => r.ROUTES)
+      },
       {path: 'times', component: TimesComponent}],
 
   },

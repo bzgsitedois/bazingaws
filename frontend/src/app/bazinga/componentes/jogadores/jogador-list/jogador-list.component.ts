@@ -4,6 +4,8 @@ import {CardModule} from 'primeng/card';
 import {NgForOf, NgOptimizedImage} from '@angular/common';
 import {Button} from 'primeng/button';
 import {PaginatorModule} from 'primeng/paginator';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-jogador-list',
@@ -14,7 +16,8 @@ import {PaginatorModule} from 'primeng/paginator';
     NgForOf,
     Button,
     PaginatorModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    MatTooltip
   ],
   standalone: true
 })
@@ -24,7 +27,7 @@ export class JogadorListComponent implements OnInit {
   rows = 8;
   first = 0;
 
-  constructor(private jogadorService: JogadorService) {}
+  constructor(private jogadorService: JogadorService , private router: Router , private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.carregarJogadores(0, this.rows);
@@ -53,6 +56,10 @@ export class JogadorListComponent implements OnInit {
   }
 
   detalhe(id:number) {
-    console.log(id)
+    this.router.navigate([id],
+      {
+        relativeTo: this.activatedRoute
+      }
+    ).then()
   }
 }
