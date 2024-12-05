@@ -74,18 +74,50 @@
 }
 
 
-.optionsDropdown{
-  word-wrap: break-word;
-  word-break: break-word;
-  width: fit-content;
-  position: absolute;
-  right: 0;
-  top: 3.5rem;
-  display: flex;
-  flex-direction: column;
-  z-index: 2000;
-  max-height: 60vh;
-  overflow-y: auto;
+::ng-deep .p-overlaypanel {
+  background-color: #f9f9f9;
   border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  width: fit-content;
 
 }
+
+::ng-deep .p-menu {
+  background-color: #f9f9f9;
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  text-decoration: none;
+}
+
+::ng-deep .p-menu .p-menuitem {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333; /* Cor do texto */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+/* Ajusta o ícone nos itens do menu */
+::ng-deep .p-menu .p-menuitem-icon {
+  color: #666;
+  transition: color 0.3s;
+}
+
+
+::ng-deep .p-overlaypanel .p-overlaypanel-content{
+  padding:0;
+}
+::ng-deep ol,
+::ng-deep ul,
+::ng-deep dl {
+  margin: 0; /* Remove o margin */
+  padding: 0; /* Remove o padding */
+}
+
+
+::ng-deep .p-menu a {
+  text-decoration: none;
+}
+

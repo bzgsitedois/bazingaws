@@ -2,7 +2,7 @@
   <p-paginator
     [first]="first"
     [rows]="rows"
-    [rowsPerPageOptions]="[10, 20, 30]"
+    [rowsPerPageOptions]="[8, 16, 24]"
     [totalRecords]="totalRecords"
     (onPageChange)="onPageChange($event)"
     [showCurrentPageReport]="true"
@@ -11,22 +11,45 @@
 </div>
 
 <div class="grid">
-  <div *ngFor="let jogador of jogadores" class="card col-12 md:col-6 lg:col-4">
-    <p-card [header]="jogador.nome || 'Sem Nome'" [subheader]="jogador.timeNome || 'Sem Time'" [style]="{ width: '360px' }">
-      <ng-template pTemplate="header">
-        <img [src]="'assets/FotoUsuario/' + jogador.id + '.jpg'" alt="Foto do Jogador" />
-        <img [src]="'assets/FotoTime/' + jogador.timeId + '.jpg'" alt="Foto do Jogador" />
-      </ng-template>
-      <p>
-        <b>ID:</b> {{ jogador.id }} <br />
-        <b>Classes:</b> {{ jogador.classeIds.join(', ') || 'Nenhuma Classe' }}
-      </p>
-      <ng-template pTemplate="footer">
-        <div class="flex gap-3 mt-1">
-          <p-button label="Detalhes" severity="secondary" class="detalhe w-full" styleClass="detalhe w-full"></p-button>
-        </div>
-      </ng-template>
-    </p-card>
+  <div *ngFor="let jogador of jogadores" class="card-container">
+    <div class="card-content">
+      <div class="team-background">
+
+        <img
+          [src]="'assets/FotoTime/' + jogador.timeId + '.jpg'"
+          alt="Imagem do Time"
+          (error)="onImageError($event, 'time')"
+        />
+      </div>
+
+      <div class="conteudo-importante">
+        <div class="profile-container">
+          @if(jogador.liderTime){
+          <img
+            class="hat-icon"
+            src="assets/pngwing.png"
+            alt="Chapéu"
+          />}
+          <div class="profile-image">
+      <div class="profile-image">
+        <img
+          [src]="'assets/FotoUsuario/' + jogador.id + '.jpg'"
+          alt="Foto do Jogador"
+          (error)="onImageError($event, 'jogador')"
+
+        />
+      </div>
+          </div>
+      <div class="profile-details">
+        <h3 class="name">{{ jogador.nome || 'Sem Nome' }}</h3>
+        <p class="subtitle">{{ jogador.timeNome || 'Sem Time' }}</p>
+      </div>
+      <div class="actions">
+        <button class="follow-btn" (click)="detalhe(jogador.id)">Detalhes</button>
+      </div>
+      </div>
+    </div>
   </div>
+</div>
 </div>
 

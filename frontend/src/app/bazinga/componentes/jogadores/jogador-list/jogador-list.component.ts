@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {JogadorService} from '../../../../service/jogador/jogador.service';
 import {CardModule} from 'primeng/card';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgOptimizedImage} from '@angular/common';
 import {Button} from 'primeng/button';
 import {PaginatorModule} from 'primeng/paginator';
 
@@ -13,14 +13,15 @@ import {PaginatorModule} from 'primeng/paginator';
     CardModule,
     NgForOf,
     Button,
-    PaginatorModule
+    PaginatorModule,
+    NgOptimizedImage
   ],
   standalone: true
 })
 export class JogadorListComponent implements OnInit {
   jogadores: any[] = [];
   totalRecords = 0;
-  rows = 10;
+  rows = 8;
   first = 0;
 
   constructor(private jogadorService: JogadorService) {}
@@ -40,5 +41,18 @@ export class JogadorListComponent implements OnInit {
     const page = event.page;
     this.rows = event.rows;
     this.carregarJogadores(page, this.rows);
+  }
+
+  onImageError(event: Event, type: string): void {
+    const target = event.target as HTMLImageElement;
+    if (type === 'time') {
+      target.src = 'assets/Fallbacks/time.jpg';
+    } else if (type === 'jogador') {
+      target.src = 'assets/Fallbacks/avatar.png';
+    }
+  }
+
+  detalhe(id:number) {
+    console.log(id)
   }
 }

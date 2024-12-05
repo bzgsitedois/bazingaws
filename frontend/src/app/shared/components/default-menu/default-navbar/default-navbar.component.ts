@@ -1,5 +1,5 @@
-import {Component, Input, Renderer2} from '@angular/core';
-import {RouterLink, RouterLinkActive} from "@angular/router";
+import {Component, inject, Input, OnInit, Renderer2} from '@angular/core';
+import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {DefaultMenuList} from "../../../types/default-menu-list";
 import {NgClass, NgOptimizedImage} from "@angular/common";
 import {MatIcon} from '@angular/material/icon';
@@ -8,6 +8,7 @@ import {SplitButtonModule} from 'primeng/splitbutton';
 import {MenuItem} from 'primeng/api';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 import {MenuModule} from 'primeng/menu';
+import {TokenService} from '../../../../service/token/token.service';
 
 @Component({
   selector: 'app-default-navbar',
@@ -26,7 +27,10 @@ import {MenuModule} from 'primeng/menu';
   templateUrl: './default-navbar.component.html',
   styleUrl: './default-navbar.component.scss'
 })
-export class DefaultNavbarComponent {
+export class DefaultNavbarComponent implements OnInit{
+  private tokenService: TokenService = inject(TokenService);
+  private router: Router = inject(Router)
+
   @Input() menuLists!: DefaultMenuList[];
   mode: 'light' | 'dark' = 'light';
 
@@ -61,11 +65,22 @@ export class DefaultNavbarComponent {
     }
   }
 
-  opcoesMenu: MenuItem[] = [
-    { label: 'Perfil', icon: 'pi pi-user', command: () => this.abrirPerfil() },
-    { label: 'Configurações', icon: 'pi pi-cog', command: () => this.abrirConfiguracoes() },
-    { label: 'Sair', icon: 'pi pi-sign-out', command: () => this.sair() },
-  ];
+  opcoesMenu: MenuItem[] = [];
+
+  ngOnInit(): void {
+    this.carregarOpcoesMenu();
+  }
+
+  carregarOpcoesMenu(): void {
+    this.opcoesMenu = [
+      { label: 'Perfil', icon: 'pi pi-user', command: () => this.abrirPerfil() },
+      { label: 'Time', icon: 'pi pi-users', command: () => this.abrirConfiguracoes() },
+      this.tokenService.getToken() === null
+        ? { label: 'Logar', icon: 'pi pi-sign-in', command: () => this.logar() }
+        : { label: 'Sair', icon: 'pi pi-sign-out', command: () => this.sair() }
+    ];
+  }
+
 
   toggleMenu(event: Event, menu: any) {
     menu.toggle(event);
@@ -80,6 +95,11 @@ export class DefaultNavbarComponent {
   }
 
   sair() {
-    console.log('Sair');
+    this.tokenService.clearToken();
+    window.location.reload();
+  }
+
+  logar(){
+    this.router.navigate(['bazinga/login']);
   }
 }
