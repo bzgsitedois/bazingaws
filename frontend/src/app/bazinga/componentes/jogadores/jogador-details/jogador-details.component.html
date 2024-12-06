@@ -1,13 +1,17 @@
 <div class="tudo">
   <div class="card">
     <div class="foto">
-      <img class="foto-jogador" src="assets/FotoUsuario/12.jpg" alt="foto jogador">
+      <img class="foto-jogador" [src]="'assets/FotoUsuario/'+id+'.jpg'" alt="foto jogador">
     </div>
-    <div class="classes"></div>
+    <div class="classes">
+      @for(classes of classe ; track classes){
+      <img [src]="'assets/classes/' + classes + '.png'" class="tamanho-classe" alt="">}
+    </div>
     <div class="camposNormais">
-      <img class="hat-icon" src="assets/pngwing.png" alt="liderTime" matTooltip="Lider do Time">
-      <h1>Nome</h1>
-      <h2>Nome do Time</h2>
+      @if(liderTime){
+      <img class="hat-icon" src="assets/pngwing.png" alt="liderTime" matTooltip="Lider do Time">}
+      <h1>{{ nome }}</h1>
+      <h2>{{timeNome}}</h2>
     </div>
   </div>
 </div>

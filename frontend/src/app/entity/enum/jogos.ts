@@ -1,0 +1,8 @@
+export const enum Jogos {
+  TF2 = "TF2",
+  VALORANT = "VALORANT",
+  BRAWLHALLA = "BRAWLHALLA",
+  ROCKETLEAGUE = "ROCKETLEAGUE",
+  FORTNITE = "FORTNITE",
+  CS2 = "CS2"
+}

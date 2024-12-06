@@ -7,6 +7,8 @@
   display:flex;
   align-items: center;
   justify-content: center;
+  height: 80vh;
+  width: 100%;
 }
 
 .foto{
@@ -35,4 +37,14 @@
   width: 100px;
   height: auto;
   z-index: 2;
+}
+
+.classes{
+  display: flex;
+  flex-direction: row;
+}
+
+.tamanho-classe{
+  width: 50px;
+  height: auto;
 }
