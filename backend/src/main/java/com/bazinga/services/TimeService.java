@@ -54,7 +54,7 @@ public class TimeService {
 
     public Optional<TimeProjectionDTO> findById(Long id) {
         Optional<Time> time = timeRepository.findTimeWithJogadoresAndJogosById(id);
-        if (time.isPresent()) {
+        if (time.isEmpty()) {
             throw new TimeNaoEncontradoException();
         }
         return time.map(timeMapper::toTimeProjectionDTO);

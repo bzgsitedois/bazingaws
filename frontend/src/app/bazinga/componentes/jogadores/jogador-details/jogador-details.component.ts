@@ -7,12 +7,14 @@ import {Classes} from '../../../../entity/enum/classes';
 import {TimeService} from '../../../../service/time/time.service';
 import {TimeProjectionDTO} from '../../../../entity/time';
 import {of} from 'rxjs';
+import {NgStyle} from '@angular/common';
 
 @Component({
   selector: 'app-jogador-details',
   standalone: true,
   imports: [
-    MatTooltip
+    MatTooltip,
+    NgStyle
   ],
   templateUrl: './jogador-details.component.html',
   styleUrl: './jogador-details.component.scss'
@@ -37,8 +39,8 @@ export class JogadorDetailsComponent implements OnInit{
                       this.classe = jogador.classes;
                       this.nome =jogador.nome;
                       this.liderTime = jogador.liderTime;
-
-                      if(jogador.time_id != null){
+                      this.time_id = jogador.time_id;
+              if(jogador.time_id != null){
                         this.timeService.buscar(jogador.time_id).subscribe((time: TimeProjectionDTO | undefined) =>{
                           this.timeNome = time?.nome
                         })
@@ -47,6 +49,14 @@ export class JogadorDetailsComponent implements OnInit{
       })}
   }
 
+  onImageError(event: Event, type: string): void {
+    const target = event.target as HTMLImageElement;
+    if (type === 'time') {
+      target.src = 'assets/Fallbacks/time.jpg';
+    } else if (type === 'jogador') {
+      target.src = 'assets/Fallbacks/avatar.png';
+    }
+  }
 
   protected readonly of = of;
 }

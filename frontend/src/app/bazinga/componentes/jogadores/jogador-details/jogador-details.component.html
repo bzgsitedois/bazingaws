@@ -1,17 +1,19 @@
 <div class="tudo">
-  <div class="card">
+  <div class="card" [ngStyle]="{'background-image': 'url(/assets/FotoTime/' + time_id + '.jpg)'}">
     <div class="foto">
-      <img class="foto-jogador" [src]="'assets/FotoUsuario/'+id+'.jpg'" alt="foto jogador">
-    </div>
+
+      <img class="foto-jogador" [src]="'assets/FotoUsuario/'+id+'.jpg'" alt="foto jogador" (error)="onImageError($event, 'jogador')"
+      >
+      </div>
     <div class="classes">
       @for(classes of classe ; track classes){
       <img [src]="'assets/classes/' + classes + '.png'" class="tamanho-classe" alt="">}
     </div>
     <div class="camposNormais">
       @if(liderTime){
-      <img class="hat-icon" src="assets/pngwing.png" alt="liderTime" matTooltip="Lider do Time">}
-      <h1>{{ nome }}</h1>
-      <h2>{{timeNome}}</h2>
+        <img class="hat-icon" src="assets/pngwing.png" alt="liderTime" matTooltip="Lider do Time">}
+      <h1 class="nome">{{ nome }}</h1>
+      <h2 class="nomeTime">{{timeNome}}</h2>
     </div>
   </div>
 </div>
