@@ -1,0 +1,44 @@
+<div class="flex align-items-center justify-content-end mt-3">
+  <p-paginator
+    [first]="first"
+    [rows]="rows"
+    [rowsPerPageOptions]="[3, 6, 9, 12]"
+    [totalRecords]="totalRecords"
+    (onPageChange)="onPageChange($event)"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="{first} - {last} de {totalRecords}"
+  ></p-paginator>
+</div>
+
+<div class="grid">
+  <div *ngFor="let time of times" class="card-container">
+    <div class="card-content">
+      <div class="team-background">
+        <img
+          [src]="'assets/FotoTime/' + time.id + '.jpg'"
+          alt="Imagem do Time"
+          (error)="onImageError($event, 'time')"
+        />
+      </div>
+      <div class="team-background-semfoco">
+        <img
+          [src]="'assets/FotoTime/' + time.id + '.jpg'"
+          alt="Imagem do Time"
+          (error)="onImageError($event, 'time')"
+        />
+      </div>
+
+      <div class="conteudo-importante">
+        <div class="profile-container">
+          <div class="profile-details">
+            <h3 class="name">{{ time.nome || 'Sem Nome' }}</h3>
+            <p class="subtitle">{{ time.descricao || 'Sem Time' }}</p>
+          </div>
+          <div class="actions">
+            <button class="follow-btn" (click)="detalhe(time.id)">Detalhes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
