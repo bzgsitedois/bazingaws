@@ -1,0 +1,30 @@
+<p-splitter
+  [panelSizes]="[25, 75]"
+  styleClass="custom-splitter"
+  [style]="{border: '1px solid var(--verdeFooter)', margin: '1em 10em ',width:'80%' , height: '80vh', background: 'transparent' , color: 'inherit'}">
+
+  <ng-template pTemplate>
+    <div class="time-foto">
+      <img [src]="'assets/FotoTime/' + id + '.jpg'" alt="">
+    </div>
+    <div class="time-nome">
+      {{nome}}
+    </div>
+    <div class="time-desc">
+      {{descricao}}
+    </div>
+    <div class="foto-jogo">
+      @for(jogo of jogos; track jogo){
+        {{jogo}}
+      }
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate>
+    <div class="lista-jogadores">
+      @for(jogadorId of jogadoresId; track jogadorId){
+        {{jogadorId}}
+      }
+    </div>
+  </ng-template>
+</p-splitter>

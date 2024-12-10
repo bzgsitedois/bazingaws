@@ -1,6 +1,7 @@
 import {Routes} from '@angular/router';
 import {HomeComponent} from '../home/home.component';
 import {TimesListComponent} from './times-list/times-list.component';
+import {TimesDetailsComponent} from './times-details/times-details.component';
 
 export const ROUTES: Routes = [
 
@@ -19,10 +20,10 @@ export const ROUTES: Routes = [
       //   pathMatch: 'full',
       //   canActivate: [authGuard],
       //   component: ConsultasAnterioresFormComponent},
-      // {
-      //   path: ':id',
-      //   // canActivate: [authGuard],
-      //   component: JogadorDetailsComponent
-      // }
+      {
+        path: ':id',
+        // canActivate: [authGuard],
+        component: TimesDetailsComponent
+      }
     ]
 

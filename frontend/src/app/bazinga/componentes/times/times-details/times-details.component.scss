@@ -1,0 +1,8 @@
+::ng-deep .p-splitter-horizontal>.p-splitter-gutter{
+  background-color: var(--verdeFooter);
+}
+
+::ng-deep .p-splitter-horizontal>.p-splitter-gutter>.p-splitter-gutter-handle{
+  background-color: #2e2e2e;
+  border: #8A8D8F 1px solid;
+}

@@ -32,12 +32,15 @@
         <div class="profile-container">
           <div class="profile-details">
             <h3 class="name">{{ time.nome || 'Sem Nome' }}</h3>
-            <p class="subtitle">{{ time.descricao || 'Sem Time' }}</p>
           </div>
           <div class="actions">
             <button class="follow-btn" (click)="detalhe(time.id)">Detalhes</button>
           </div>
         </div>
+      </div>
+      <div class="num-jogadores">
+        <p>Número de Jogadores:</p>
+        <small>{{time.num_jogadores}}</small>
       </div>
     </div>
   </div>
