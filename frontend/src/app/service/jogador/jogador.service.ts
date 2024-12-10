@@ -24,10 +24,10 @@ export class JogadorService {
     return this.http.post<JogadorCreateDTO>(this.api, user);
   }
 
-  listarJogadores(page: number, size: number): Observable<any> {
-    return this.http.post<any>(`${this.api+"/listAll"}?page=${page}&size=${size}`, {});
+  listarJogadores(page: number, size: number, filtro: any ): Observable<any> {
+    const params = `?page=${page}&size=${size}`;
+    return this.http.post<any>(`${this.api}/listAll${params}`, filtro);
   }
-
 
 
 }

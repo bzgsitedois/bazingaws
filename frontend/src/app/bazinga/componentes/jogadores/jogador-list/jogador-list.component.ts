@@ -34,7 +34,7 @@ export class JogadorListComponent implements OnInit {
   }
 
   carregarJogadores(page: number, size: number) {
-    this.jogadorService.listarJogadores(page, size).subscribe((response) => {
+    this.jogadorService.listarJogadores(page, size , null).subscribe((response) => {
       this.jogadores = response.data;
       this.totalRecords = response.meta.totalElements;
     });

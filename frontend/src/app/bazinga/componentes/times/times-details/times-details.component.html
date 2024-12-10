@@ -21,10 +21,55 @@
   </ng-template>
 
   <ng-template pTemplate>
-    <div class="lista-jogadores">
-      @for(jogadorId of jogadoresId; track jogadorId){
-        {{jogadorId}}
-      }
+    <div class="flex align-items-center justify-content-end mt-3">
+      <p-paginator
+        [first]="first"
+        [rows]="rows"
+        [rowsPerPageOptions]="[3, 6, 9, 12]"
+        [totalRecords]="totalRecords"
+        (onPageChange)="onPageChange($event)"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="{first} - {last} de {totalRecords}"
+      ></p-paginator>
+    </div>
+
+    <div class="grid">
+      @for(jogador of jogadores; track jogador){
+      <div class="card-container">
+        <div class="card-content">
+          @if(jogador.liderTime){
+            <img
+              class="hat-icon"
+              src="assets/pngwing.png"
+              alt="Chapéu"
+              matTooltip="Líder do Time"
+            />
+          }
+          <div class="profile-image">
+            <img
+              [src]="'assets/FotoUsuario/' + jogador.id + '.jpg'"
+              alt="Foto do Jogador"
+              (error)="onImageError($event, 'jogador')"
+
+            />
+          </div>
+          <div class="classes">
+            @for(classe of jogador.classeIds; track classe){
+            <img [src]="'assets/classesId/' + classe + '.jpg'">}
+          </div>
+          <div class="conteudo-importante">
+            <div class="profile-container">
+              <div class="profile-details">
+                <h3 class="name">{{ jogador.nome || 'Sem Nome' }}</h3>
+              </div>
+              <div class="actions">
+                <p-button class="follow-btn" [rounded]="true" icon="pi pi-angle-double-up"></p-button>
+                <p-button class="follow-btn" [rounded]="true" icon="pi pi-times"></p-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>}
     </div>
   </ng-template>
 </p-splitter>

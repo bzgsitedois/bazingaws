@@ -7,12 +7,20 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {JogadorProjectionDTO} from '../../../../entity/jogador';
 import {TimeProjectionDTO} from '../../../../entity/time';
 import {Jogos} from '../../../../entity/enum/jogos';
+import {NgForOf} from '@angular/common';
+import {PaginatorModule} from 'primeng/paginator';
+import {MatTooltip} from '@angular/material/tooltip';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-times-details',
   standalone: true,
   imports: [
-    SplitterModule
+    SplitterModule,
+    NgForOf,
+    PaginatorModule,
+    MatTooltip,
+    Button
   ],
   templateUrl: './times-details.component.html',
   styleUrl: './times-details.component.scss'
@@ -23,6 +31,10 @@ export class TimesDetailsComponent implements OnInit{
   descricao:string = 'Sem descrição';
   jogadoresId: number[] | undefined;
   jogos: Jogos[] | undefined;
+  jogadores: any[] = [];
+  totalRecords = 0;
+  rows = 3;
+  first = 0;
 
   constructor(private jogadorService: JogadorService , private timeService: TimeService , private router: Router , private activatedRoute: ActivatedRoute) {}
 
@@ -37,6 +49,7 @@ export class TimesDetailsComponent implements OnInit{
           this.nome =time.nome;
           this.jogadoresId = time.jogadoresId;
           this.jogos = time.jogos;
+          this.carregarJogadores(0, this.rows);
         }
       })}
   }
@@ -49,5 +62,19 @@ export class TimesDetailsComponent implements OnInit{
       target.src = 'assets/Fallbacks/avatar.png';
     }
   }
+  carregarJogadores(page: number, size: number) {
+    const filtro = {
+      timeNome: this.nome,
+    };
+    this.jogadorService.listarJogadores(page, size , filtro).subscribe((response) => {
+      this.jogadores = response.data;
+      this.totalRecords = response.meta.totalElements;
+    });
+  }
 
+  onPageChange(event: any) {
+    const page = event.page;
+    this.rows = event.rows;
+    this.carregarJogadores(page, this.rows);
+  }
 }
