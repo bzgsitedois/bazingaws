@@ -18,6 +18,12 @@
         {{jogo}}
       }
     </div>
+    <div class="botoes-time">
+      @if(getUsuarioLogado('liderTime') && getUsuarioLogado('timeId') === id){
+      <p-button>Excluir Time</p-button>}
+      @if( getUsuarioLogado('timeId') === id){
+      <p-button>Sair do Time</p-button>}
+    </div>
   </ng-template>
 
   <ng-template pTemplate>
@@ -35,41 +41,30 @@
 
     <div class="grid">
       @for(jogador of jogadores; track jogador){
-      <div class="card-container">
         <div class="card-content">
-          @if(jogador.liderTime){
-            <img
-              class="hat-icon"
-              src="assets/pngwing.png"
-              alt="Chapéu"
-              matTooltip="Líder do Time"
-            />
-          }
+          <div class="chapeu">
+            @if(jogador.liderTime){
+              <img class="hat-icon"  [src]="'assets/pngwing.png'" alt="Chapéu"   matTooltip="Líder do Time" />}
+          </div>
           <div class="profile-image">
-            <img
-              [src]="'assets/FotoUsuario/' + jogador.id + '.jpg'"
-              alt="Foto do Jogador"
-              (error)="onImageError($event, 'jogador')"
 
-            />
+            <img [src]="'assets/FotoUsuario/' + jogador.id + '.jpg'" alt="Foto do Jogador" (error)="onImageError($event, 'jogador')" />
           </div>
-          <div class="classes">
-            @for(classe of jogador.classeIds; track classe){
-            <img [src]="'assets/classesId/' + classe + '.jpg'">}
-          </div>
+
           <div class="conteudo-importante">
-            <div class="profile-container">
-              <div class="profile-details">
-                <h3 class="name">{{ jogador.nome || 'Sem Nome' }}</h3>
-              </div>
-              <div class="actions">
-                <p-button class="follow-btn" [rounded]="true" icon="pi pi-angle-double-up"></p-button>
-                <p-button class="follow-btn" [rounded]="true" icon="pi pi-times"></p-button>
-              </div>
+            <h3 class="name">{{ jogador.nome || 'Sem Nome' }}</h3>
+            <div class="classes">
+              @for(classe of jogador.classeIds; track classe){
+              <img [src]="'assets/classesId/' + classe + '.png'" class="tamanho-classe" [alt]="classe" />}
             </div>
           </div>
+          @if(getUsuarioLogado('liderTime') && getUsuarioLogado('timeId') === id){
+          <div class="actions">
+            <p-button class="follow-btn" [rounded]="true" icon="pi pi-angle-double-up" matTooltip="Promover a Líder" (click)="promoverJogador(jogador.id)"></p-button>
+            <p-button class="follow-btn" [rounded]="true" icon="pi pi-times" matTooltip="Expulsar do Time" (click)="expulsarJogador(jogador.id)"></p-button>
+          </div>}
         </div>
-      </div>}
+      }
     </div>
   </ng-template>
 </p-splitter>

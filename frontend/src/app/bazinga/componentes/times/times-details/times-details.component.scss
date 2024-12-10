@@ -17,20 +17,6 @@
   align-items: center;
 }
 
-.card-content {
-  position: relative;
-  width: 60vw;
-  height: 10%;
-  border-radius: 12px;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  transition: transform 0.3s ease;
-  display: flex; /* Habilita o flexbox */
-  flex-direction: column; /* Conteúdo em coluna */
-  justify-content: center; /* Centraliza verticalmente */
-  align-items: center;
-}
 
 .conteudo-importante {
   display: flex;
@@ -40,45 +26,6 @@
 
 .card-content:hover {
   transform: scale(1.05);
-}
-
-.team-background {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 2;
-}
-
-.team-background img {
-  width: 100%;
-  height: 100%;
-  object-fit: scale-down;
-  opacity: 1;
-}
-
-.team-background-semfoco {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 1;
-}
-.num-jogadores{
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-  padding: 1em;
-  filter: drop-shadow(1px 1px  var(--black-default));
-
-}
-
-.team-background-semfoco img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: blur(10px);
 }
 
 .profile-container {
@@ -110,31 +57,13 @@
   z-index: 3;
   position: relative;
 }
-//
-//.follow-btn {
-//  padding: 10px 20px;
-//  font-size: 0.9rem;
-//  font-weight: bold;
-//  color: #fff;
-//  background-color: var(--verdeFooter);
-//  border: none;
-//  border-radius: 20px;
-//  cursor: pointer;
-//  transition: background-color 0.3s ease;
-//}
-//
-//.follow-btn:hover {
-//  background-color: green;
-//}
-
 
 .grid {
-  display: grid;
-  justify-items: center;
-  grid-template-columns: repeat(1, 1fr); /* Quatro colunas */
-  gap: 3em;
-  padding: 16px;
-  max-width: 100%; /* Limita a largura máxima */
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  align-items: center;
+  gap: 1em;
 }
 
 @media (max-width: 1024px) {
@@ -268,11 +197,14 @@
   object-fit: cover;
 }
 
+.chapeu{
+  position:absolute;
+}
+
 .hat-icon {
-  position: absolute;
-  top: -30px;
+  position: relative;
+  top: -55px;
   left: 50%;
-  transform: translateX(-50%);
   width: 50px;
   height: auto;
   z-index: 2;
@@ -281,4 +213,80 @@
 .profile-details {
   z-index: 3;
   position: relative;
+}
+
+
+
+.botoes-time{
+  align-items: center;
+  justify-content:center;
+  display:flex;
+  flex-direction: row;
+  gap: 1em;
+}
+
+.card-content {
+  width: 30vw;
+  height: auto;
+  border-radius: 12px;
+  background-color: #f1f1f1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: row;
+  padding: 16px;
+  gap: 1em;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.profile-image {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0; /* Impede que a imagem redimensione */
+}
+
+
+.conteudo-importante {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px; /* Espaço entre nome e classes */
+  flex-grow: 1; /* Expande para preencher espaço disponível */
+}
+
+.name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0; /* Remove margens padrão */
+}
+
+.classes {
+  display: flex;
+  gap: 8px; /* Espaçamento entre as imagens das classes */
+  flex-wrap: wrap; /* Permite quebrar linha se necessário */
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px; /* Espaçamento entre botões */
+}
+
+.card-content:hover {
+  transform: scale(1.05);
+}
+
+.classes{
+  display: flex;
+  flex-direction: row;
+}
+
+.tamanho-classe{
+  width: 30px;
+  height: auto;
 }

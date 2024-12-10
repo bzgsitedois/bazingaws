@@ -7,10 +7,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {JogadorProjectionDTO} from '../../../../entity/jogador';
 import {TimeProjectionDTO} from '../../../../entity/time';
 import {Jogos} from '../../../../entity/enum/jogos';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {PaginatorModule} from 'primeng/paginator';
 import {MatTooltip} from '@angular/material/tooltip';
 import {Button} from 'primeng/button';
+import {TokenService} from '../../../../service/token/token.service';
 
 @Component({
   selector: 'app-times-details',
@@ -20,7 +21,8 @@ import {Button} from 'primeng/button';
     NgForOf,
     PaginatorModule,
     MatTooltip,
-    Button
+    Button,
+    NgIf
   ],
   templateUrl: './times-details.component.html',
   styleUrl: './times-details.component.scss'
@@ -36,7 +38,7 @@ export class TimesDetailsComponent implements OnInit{
   rows = 3;
   first = 0;
 
-  constructor(private jogadorService: JogadorService , private timeService: TimeService , private router: Router , private activatedRoute: ActivatedRoute) {}
+  constructor(private tokenService: TokenService , private jogadorService: JogadorService , private timeService: TimeService , private router: Router , private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     const idParam = this.activatedRoute.snapshot.paramMap.get('id');
@@ -64,8 +66,9 @@ export class TimesDetailsComponent implements OnInit{
   }
   carregarJogadores(page: number, size: number) {
     const filtro = {
-      timeNome: this.nome,
+      timeNome: this.nome
     };
+
     this.jogadorService.listarJogadores(page, size , filtro).subscribe((response) => {
       this.jogadores = response.data;
       this.totalRecords = response.meta.totalElements;
@@ -76,5 +79,18 @@ export class TimesDetailsComponent implements OnInit{
     const page = event.page;
     this.rows = event.rows;
     this.carregarJogadores(page, this.rows);
+  }
+
+  getUsuarioLogado(info:string){
+    return this.tokenService.getTokenAttribute(info)
+  }
+
+
+  expulsarJogador(id:any){
+    console.log(id)
+  }
+
+  promoverJogador(id:any){
+    console.log(id)
   }
 }
