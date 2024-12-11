@@ -93,4 +93,8 @@ export class TimesDetailsComponent implements OnInit{
   promoverJogador(id:any){
     console.log(id)
   }
+
+  rebaixarJogador(id:any){
+    console.log(id)
+  }
 }

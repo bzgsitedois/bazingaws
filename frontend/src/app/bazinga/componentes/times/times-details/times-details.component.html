@@ -4,25 +4,31 @@
   [style]="{border: '1px solid var(--verdeFooter)', margin: '1em 10em ',width:'80%' , height: '80vh', background: 'transparent' , color: 'inherit'}">
 
   <ng-template pTemplate>
-    <div class="time-foto">
-      <img [src]="'assets/FotoTime/' + id + '.jpg'" alt="">
-    </div>
-    <div class="time-nome">
-      {{nome}}
-    </div>
-    <div class="time-desc">
-      {{descricao}}
-    </div>
     <div class="foto-jogo">
-      @for(jogo of jogos; track jogo){
-        {{jogo}}
+      @for (jogo of jogos; track jogo) {
+        <img [src]="'assets/jogos/' + jogo + '.jpg'" alt="">
       }
+
+    </div>
+    <div class="info-time">
+      <div class="time-foto">
+        <img [src]="'assets/FotoTime/' + id + '.jpg'" alt="" (error)="onImageError($event, 'time')">
+      </div>
+      <div class="time-nome">
+        {{ nome }}
+      </div>
+      <div class="time-desc">
+        "{{ descricao }}"
+      </div>
+
     </div>
     <div class="botoes-time">
-      @if(getUsuarioLogado('liderTime') && getUsuarioLogado('timeId') === id){
-      <p-button>Excluir Time</p-button>}
-      @if( getUsuarioLogado('timeId') === id){
-      <p-button>Sair do Time</p-button>}
+      @if (getUsuarioLogado('liderTime') && getUsuarioLogado('timeId') === id) {
+        <p-button severity="danger">Excluir Time</p-button>
+      }
+      @if (getUsuarioLogado('timeId') === id) {
+        <p-button severity="danger" [outlined]="true">Sair do Time</p-button>
+      }
     </div>
   </ng-template>
 
@@ -31,7 +37,6 @@
       <p-paginator
         [first]="first"
         [rows]="rows"
-        [rowsPerPageOptions]="[3, 6, 9, 12]"
         [totalRecords]="totalRecords"
         (onPageChange)="onPageChange($event)"
         [showCurrentPageReport]="true"
@@ -40,29 +45,43 @@
     </div>
 
     <div class="grid">
-      @for(jogador of jogadores; track jogador){
+      @for (jogador of jogadores; track jogador) {
         <div class="card-content">
-          <div class="chapeu">
-            @if(jogador.liderTime){
-              <img class="hat-icon"  [src]="'assets/pngwing.png'" alt="Chapéu"   matTooltip="Líder do Time" />}
+          <div class="quadrado-fotoechapeu">
+            <div class="chapeu">
+              @if (jogador.liderTime) {
+                <img class="hat-icon" [src]="'assets/pngwing.png'" alt="Chapéu" matTooltip="Líder do Time"/>
+              }
+            </div>
+            <div class="profile-image">
+              <img [src]="'assets/FotoUsuario/' + jogador.id + '.jpg'" alt="Foto do Jogador"
+                   (error)="onImageError($event, 'jogador')"/>
+            </div>
           </div>
-          <div class="profile-image">
-
-            <img [src]="'assets/FotoUsuario/' + jogador.id + '.jpg'" alt="Foto do Jogador" (error)="onImageError($event, 'jogador')" />
-          </div>
-
           <div class="conteudo-importante">
             <h3 class="name">{{ jogador.nome || 'Sem Nome' }}</h3>
             <div class="classes">
-              @for(classe of jogador.classeIds; track classe){
-              <img [src]="'assets/classesId/' + classe + '.png'" class="tamanho-classe" [alt]="classe" />}
+              @for (classe of jogador.classeIds; track classe) {
+                <img [src]="'assets/classesId/' + classe + '.png'" class="tamanho-classe" [alt]="classe"/>
+              }
             </div>
           </div>
-          @if(getUsuarioLogado('liderTime') && getUsuarioLogado('timeId') === id){
-          <div class="actions">
-            <p-button class="follow-btn" [rounded]="true" icon="pi pi-angle-double-up" matTooltip="Promover a Líder" (click)="promoverJogador(jogador.id)"></p-button>
-            <p-button class="follow-btn" [rounded]="true" icon="pi pi-times" matTooltip="Expulsar do Time" (click)="expulsarJogador(jogador.id)"></p-button>
-          </div>}
+          @if (getUsuarioLogado('liderTime') && getUsuarioLogado('timeId') === id) {
+            <div class="actions">
+              @if (!jogador.liderTime) {
+                <p-button severity="success" class="follow-btn" [rounded]="true" icon="pi pi-angle-double-up"
+                          matTooltip="Promover a Líder" (click)="promoverJogador(jogador.id)"></p-button>
+              }
+              @if (jogador.liderTime && jogador.id != getUsuarioLogado("id")) {
+                <p-button severity="secondary" class="follow-btn" [rounded]="true" icon="pi pi-angle-double-down"
+                          matTooltip="Rebaixar a Membro" (click)="rebaixarJogador(jogador.id)"></p-button>
+              }
+              @if (jogador.id != getUsuarioLogado('id')) {
+                <p-button severity="contrast" class="follow-btn" [rounded]="true" icon="pi pi-times"
+                          matTooltip="Expulsar do Time" (click)="expulsarJogador(jogador.id)"></p-button>
+              }
+            </div>
+          }
         </div>
       }
     </div>

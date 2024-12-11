@@ -6,7 +6,9 @@ public enum Jogo {
     BRAWLHALLA("BRAWLHALLA"),
     ROCKETLEAGUE("ROCKETLEAGUE"),
     FORTNITE("FORTNITE"),
-    CS2("CS2");
+    CS2("CS2"),
+    LOL("LOL"),
+    MARVELRIVALS("MARVELRIVALS");
 
     Jogo(String descricao) {
         this.descricao = descricao;
