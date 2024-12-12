@@ -3,7 +3,7 @@ import {inject, Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {JogadorCreateDTO, JogadorProjectionDTO} from '../../entity/jogador';
 import {Observable} from 'rxjs';
-import {TimeProjectionDTO} from '../../entity/time';
+import {AddJogadoresTimeDTO, TimeProjectionDTO} from '../../entity/time';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +29,17 @@ export class TimeService {
     return this.http.post<any>(`${this.api+"/listAll"}?page=${page}&size=${size}`, {});
   }
 
+  deletarTime(id: number ){
+    return this.http.delete(`${this.api}/${id}`)
+  }
 
+  removerJogadoresDoTime(idJogador: number, id: number | undefined): Observable<string> {
+    const body = { idsJogadores: [idJogador] };
+    return this.http.post<string>(`${this.api}/${id}/jogadores/remover`, body);
+  }
+
+  adicionarJogadoresDoTime(user: Partial<AddJogadoresTimeDTO> , id : number | undefined): Observable<string> {
+    return this.http.post<string>(`${this.api}/${id}/jogadores/adicionar`, user);
+  }
 
 }

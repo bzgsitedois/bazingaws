@@ -86,7 +86,7 @@ public class TimeController {
             @PathVariable Long timeId,
             @RequestBody AddJogadoresTimeDTO jogadores) {
         jogadorService.adicionarJogadoresAoTime(timeId, jogadores.idsJogadores());
-        return ResponseEntity.ok("Jogadores adicionados com sucesso.");
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{timeId}/jogadores/remover")
@@ -94,7 +94,7 @@ public class TimeController {
             @PathVariable Long timeId,
             @RequestBody AddJogadoresTimeDTO jogadores) {
         jogadorService.removerJogadoresDoTime(timeId, jogadores.idsJogadores());
-        return ResponseEntity.ok("Jogadores removidos com sucesso.");
+        return ResponseEntity.ok().build();
     }
 
 

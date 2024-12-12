@@ -16,3 +16,7 @@ export interface TimeListAllDTO{
   lideres: string[],
    num_jogadores: number,
 }
+
+export interface AddJogadoresTimeDTO{
+idsJogadores: number[]
+}

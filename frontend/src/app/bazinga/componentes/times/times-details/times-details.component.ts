@@ -7,11 +7,14 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {JogadorProjectionDTO} from '../../../../entity/jogador';
 import {TimeProjectionDTO} from '../../../../entity/time';
 import {Jogos} from '../../../../entity/enum/jogos';
-import {NgForOf, NgIf} from '@angular/common';
+import {NgForOf, NgIf, NgStyle} from '@angular/common';
 import {PaginatorModule} from 'primeng/paginator';
 import {MatTooltip} from '@angular/material/tooltip';
 import {Button} from 'primeng/button';
 import {TokenService} from '../../../../service/token/token.service';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService, MessageService} from 'primeng/api';
+import {ToastModule} from 'primeng/toast';
 
 @Component({
   selector: 'app-times-details',
@@ -22,8 +25,12 @@ import {TokenService} from '../../../../service/token/token.service';
     PaginatorModule,
     MatTooltip,
     Button,
-    NgIf
+    NgIf,
+    ConfirmDialogModule,
+    ToastModule,
+    NgStyle
   ],
+  providers: [ConfirmationService, MessageService],
   templateUrl: './times-details.component.html',
   styleUrl: './times-details.component.scss'
 })
@@ -38,7 +45,7 @@ export class TimesDetailsComponent implements OnInit{
   rows = 3;
   first = 0;
 
-  constructor(private tokenService: TokenService , private jogadorService: JogadorService , private timeService: TimeService , private router: Router , private activatedRoute: ActivatedRoute) {}
+  constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private tokenService: TokenService , private jogadorService: JogadorService , private timeService: TimeService , private router: Router , private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     const idParam = this.activatedRoute.snapshot.paramMap.get('id');
@@ -86,15 +93,124 @@ export class TimesDetailsComponent implements OnInit{
   }
 
 
-  expulsarJogador(id:any){
-    console.log(id)
+  expulsarJogador(idJogador: number) {
+    this.confirmationService.confirm({
+      message: 'Você tem certeza que quer expulsar esse jogador?',
+      header: 'Expulsar Jogador',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: "none",
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      rejectIcon: "none",
+      rejectButtonStyleClass: "p-button-text",
+      accept: () => {
+        this.timeService.removerJogadoresDoTime(idJogador, this.id).subscribe({
+          next: (response:string) => {
+            this.messageService.add({
+              severity: 'info',
+              summary: '',
+              detail: 'O jogador foi expulso do Time'
+            });
+            this.carregarJogadores(0, this.rows);
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Erro',
+              detail: `Erro ao expulsar jogador: ${err.message}`
+            });
+          }
+        });
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: '',
+          detail: 'A ação foi cancelada.',
+          life: 3000
+        });
+      }
+    });
   }
 
   promoverJogador(id:any){
-    console.log(id)
+    this.confirmationService.confirm({
+      message: 'Você tem certeza que quer promover esse jogador?',
+      header: 'Promover Jogador',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: "none",
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      rejectIcon: "none",
+      rejectButtonStyleClass: "p-button-text",
+      accept: () => {
+        this.jogadorService.novoLider(id).subscribe({
+          next: () => {
+            this.messageService.add({
+              severity: 'success',
+              summary: '',
+              detail: 'O jogador foi promovido a lider'
+            });
+            this.carregarJogadores(0, this.rows);
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: `Erro ao promover jogador`
+            });
+          }
+        });
+        this.carregarJogadores(0, this.rows);
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: '',
+          detail: 'A ação foi cancelada.',
+          life: 3000
+        });
+      }
+    });
   }
 
   rebaixarJogador(id:any){
-    console.log(id)
+    this.confirmationService.confirm({
+      message: 'Você tem certeza que quer rebaixar esse jogador?',
+      header: 'Rebaixar Jogador',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: "none",
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      rejectIcon: "none",
+      rejectButtonStyleClass: "p-button-text",
+      accept: () => {
+        this.jogadorService.exLider(id).subscribe({
+          next:() => {
+            this.messageService.add({
+              severity: 'success',
+              summary: '',
+              detail: 'O jogador foi rebaixado a membro'
+            });
+            this.carregarJogadores(0, this.rows);
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: `Erro ao rebaixar jogador`
+            });
+          }
+        });
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: '',
+          detail: 'A ação foi cancelada.',
+          life: 3000
+        });
+      }
+    });
   }
 }

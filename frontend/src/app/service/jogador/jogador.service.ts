@@ -29,5 +29,14 @@ export class JogadorService {
     return this.http.post<any>(`${this.api}/listAll${params}`, filtro);
   }
 
+  exLider(id: number ): Observable<string>{
+    const body = {  };
+    return this.http.put<string>(`${this.api}/exLider/${id}` , body)
+  }
+  novoLider(id: number ): Observable<string>{
+    const body = {  };
+    return this.http.put<string>(`${this.api}/novoLider/${id}` , body)
+  }
+
 
 }

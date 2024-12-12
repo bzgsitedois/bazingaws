@@ -96,7 +96,7 @@ public class JogadorController {
     private ResponseEntity<?> novoLider(@PathVariable Long id) {
         if (id != null) {
             jogadorService.definirNovoLider(id);
-            return new ResponseEntity<>("O jogador "+ jogadorRepository.findById(id).get().getNome() + " agora é lider", HttpStatus.OK);
+            return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -106,7 +106,7 @@ public class JogadorController {
     private ResponseEntity<?> exLider(@PathVariable Long id) {
         if (id != null) {
             jogadorService.tirarCargoLider(id);
-            return new ResponseEntity<>("O jogador "+ jogadorRepository.findById(id).get().getNome() + " não é mais lider", HttpStatus.OK);
+            return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
         }

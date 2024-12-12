@@ -1,3 +1,5 @@
+<p-confirmDialog/>
+<p-toast />
 <p-splitter
   [panelSizes]="[25, 75]"
   styleClass="custom-splitter"
@@ -26,7 +28,7 @@
       @if (getUsuarioLogado('liderTime') && getUsuarioLogado('timeId') === id) {
         <p-button severity="danger">Excluir Time</p-button>
       }
-      @if (getUsuarioLogado('timeId') === id) {
+      @if (getUsuarioLogado('timeId') === id && jogadores.length > 1) {
         <p-button severity="danger" [outlined]="true">Sair do Time</p-button>
       }
     </div>

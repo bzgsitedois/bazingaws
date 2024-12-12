@@ -9,6 +9,7 @@ import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {provideToastr} from "ngx-toastr";
 import {APP_ROUTES} from "./app/app.routes";
 import {JwtModule} from "@auth0/angular-jwt";
+import {AuthInterceptor} from './app/service/auth/interceptor/auth.interceptor';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -28,7 +29,7 @@ bootstrapApplication(AppComponent, {
       }),
     ),
     // AuthGuard,
-    // { provide: HTTP_INTERCEPTORS, useClass: LoginInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ]
 })
   .catch((err) => console.error(err));
