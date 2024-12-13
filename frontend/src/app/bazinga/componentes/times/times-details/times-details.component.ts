@@ -213,4 +213,84 @@ export class TimesDetailsComponent implements OnInit{
       }
     });
   }
+
+  excluirTime(){
+    this.confirmationService.confirm({
+      message: 'Você tem certeza que quer excluir esse time?',
+      header: 'Excluir Time',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: "none",
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      rejectIcon: "none",
+      rejectButtonStyleClass: "p-button-text",
+      accept: () => {
+        this.timeService.deletarTime(this.id).subscribe({
+          next:() => {
+            this.messageService.add({
+              severity: 'success',
+              summary: '',
+              detail: 'O time foi excluido'
+            });
+            this.carregarJogadores(0, this.rows);
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: `Erro ao excluir time`
+            });
+          }
+        });
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: '',
+          detail: 'A ação foi cancelada.',
+          life: 3000
+        });
+      }
+    });
+  }
+
+  sairTime(){
+    this.confirmationService.confirm({
+      message: 'Você tem certeza que quer sair deste time?',
+      header: 'Sair do Time',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: "none",
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      rejectIcon: "none",
+      rejectButtonStyleClass: "p-button-text",
+      accept: () => {
+        this.timeService.removerJogadoresDoTime(this.getUsuarioLogado('id'),this.id).subscribe({
+          next:() => {
+            this.messageService.add({
+              severity: 'success',
+              summary: '',
+              detail: 'Você saiu do time'
+            });
+            this.carregarJogadores(0, this.rows);
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: `Erro ao sair do time`
+            });
+          }
+        });
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: '',
+          detail: 'A ação foi cancelada.',
+          life: 3000
+        });
+      }
+    });
+  }
 }

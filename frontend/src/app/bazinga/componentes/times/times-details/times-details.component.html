@@ -26,10 +26,10 @@
     </div>
     <div class="botoes-time">
       @if (getUsuarioLogado('liderTime') && getUsuarioLogado('timeId') === id) {
-        <p-button severity="danger">Excluir Time</p-button>
+        <p-button severity="danger" (click)="excluirTime()">Excluir Time</p-button>
       }
       @if (getUsuarioLogado('timeId') === id && jogadores.length > 1) {
-        <p-button severity="danger" [outlined]="true">Sair do Time</p-button>
+        <p-button severity="danger" [outlined]="true" (click)="sairTime()">Sair do Time</p-button>
       }
     </div>
   </ng-template>

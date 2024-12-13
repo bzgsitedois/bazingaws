@@ -29,7 +29,7 @@ export class TimeService {
     return this.http.post<any>(`${this.api+"/listAll"}?page=${page}&size=${size}`, {});
   }
 
-  deletarTime(id: number ){
+  deletarTime(id: number | undefined ){
     return this.http.delete(`${this.api}/${id}`)
   }
 
