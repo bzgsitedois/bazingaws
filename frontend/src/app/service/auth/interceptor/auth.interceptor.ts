@@ -9,21 +9,22 @@ import {TokenService} from '../../token/token.service';
 })
 export class AuthInterceptor implements HttpInterceptor {
 
-
-  constructor(private tokenService : TokenService) {
-  }
+  constructor(private tokenService: TokenService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.headers.has('Skip-Interceptor') && req.headers.get('Skip-Interceptor') === 'true') {
-      const headers = req.headers.delete('Skip-Interceptor');
-      const clonedRequest = req.clone({ headers });
-      return next.handle(clonedRequest);
+    if (req.url.includes('/login')) {
+      return next.handle(req);
     }
 
     const token = this.tokenService.getToken();
-    const authReq = req.clone({
-      setHeaders: { 'Authorization': `Bearer ${token}` }
-    });
-    return next.handle(authReq);
+
+    if (token && token.trim() !== '') {
+      const authReq = req.clone({
+        setHeaders: { 'Authorization': `Bearer ${token}` }
+      });
+      return next.handle(authReq);  // Adiciona o token na requisição
+    }
+
+    return next.handle(req);
   }
 }

@@ -55,7 +55,7 @@ public class JogadorController {
     @PostMapping
     private ResponseEntity<?> newEntity(@RequestBody @Valid JogadorCreateDTO dto) {
         jogadorService.newEntity(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "Jogador Criado"));
+        return  ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
