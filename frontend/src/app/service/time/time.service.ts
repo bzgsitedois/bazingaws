@@ -42,4 +42,6 @@ export class TimeService {
     return this.http.post<string>(`${this.api}/${id}/jogadores/adicionar`, user);
   }
 
+
+
 }

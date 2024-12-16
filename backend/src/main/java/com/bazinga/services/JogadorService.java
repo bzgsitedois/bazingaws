@@ -267,6 +267,30 @@ public class JogadorService {
 
     }
 
+    public void sairTime(){
+        Jogador jogadorLogado = getJogadorAutenticado();
+        Long timeId = jogadorLogado.getTime().getId();
+
+        if(jogadorLogado.getLiderTime() && !timeRepository.doisLideres(timeId)) {
+
+            Long novoLiderId = timeRepository.findRandomJogadorIdByTimeID(timeId);
+
+            if (novoLiderId != null) {
+               Jogador novolider = jogadorRepository.findById(novoLiderId).orElseThrow(() -> new EntityNotFoundException("Jogador nao existe"));
+                novolider.setLiderTime(true);
+                jogadorRepository.save(novolider);
+                System.out.println("Jogador promovido a líder: " + novolider.getNome());
+            } else {
+                throw new IllegalStateException("Não há jogadores não líderes disponíveis no time.");
+            }
+
+            jogadorLogado.setLiderTime(false);
+        }
+
+        jogadorLogado.setTime(null);
+        jogadorRepository.save(jogadorLogado);
+    }
+
     public void deleteEntity(Long id) {
         jogadorRepository.deleteById(id);
     }

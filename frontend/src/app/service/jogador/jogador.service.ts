@@ -38,5 +38,9 @@ export class JogadorService {
     return this.http.put<string>(`${this.api}/novoLider/${id}` , body)
   }
 
+  sairTime(){
+    const body = {  };
+    return this.http.put<any>(`${this.api}/sairTime`, body);
+  }
 
 }

@@ -124,5 +124,9 @@ public class JogadorController {
         return ResponseEntity.ok().body(path);
     }
 
-
+    @PutMapping("/sairTime")
+    public ResponseEntity<?> sairTime(){
+        jogadorService.sairTime();
+        return ResponseEntity.ok().build();
+    }
 }

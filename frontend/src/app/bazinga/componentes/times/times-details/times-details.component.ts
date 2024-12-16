@@ -44,7 +44,8 @@ export class TimesDetailsComponent implements OnInit{
   totalRecords = 0;
   rows = 3;
   first = 0;
-
+  liderTimeJogador: boolean | undefined = false;
+  timeIdJogador: number | undefined = undefined;
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private tokenService: TokenService , private jogadorService: JogadorService , private timeService: TimeService , private router: Router , private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -61,6 +62,10 @@ export class TimesDetailsComponent implements OnInit{
           this.carregarJogadores(0, this.rows);
         }
       })}
+    this.jogadorService.buscar(this.getUsuarioLogado('id')).subscribe((jogador: JogadorProjectionDTO|undefined)=> {
+      this.liderTimeJogador = jogador?.liderTime;
+      this.timeIdJogador = jogador?.time_id;
+    })
   }
 
   onImageError(event: Event, type: string): void {
@@ -227,12 +232,12 @@ export class TimesDetailsComponent implements OnInit{
       accept: () => {
         this.timeService.deletarTime(this.id).subscribe({
           next:() => {
+            this.router.navigate(['bazinga/times'])
             this.messageService.add({
               severity: 'success',
               summary: '',
               detail: 'O time foi excluido'
             });
-            this.carregarJogadores(0, this.rows);
           },
           error: (err) => {
             this.messageService.add({
@@ -265,7 +270,7 @@ export class TimesDetailsComponent implements OnInit{
       rejectIcon: "none",
       rejectButtonStyleClass: "p-button-text",
       accept: () => {
-        this.timeService.removerJogadoresDoTime(this.getUsuarioLogado('id'),this.id).subscribe({
+        this.jogadorService.sairTime().subscribe({
           next:() => {
             this.messageService.add({
               severity: 'success',
@@ -273,6 +278,7 @@ export class TimesDetailsComponent implements OnInit{
               detail: 'Você saiu do time'
             });
             this.carregarJogadores(0, this.rows);
+            window.location.reload()
           },
           error: (err) => {
             this.messageService.add({

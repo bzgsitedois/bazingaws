@@ -40,7 +40,7 @@ public class TimeController {
     }
 
     @DeleteMapping(value = "/{id}")
-    private ResponseEntity<String> delete(@PathVariable Long id) {
+    private ResponseEntity<?> delete(@PathVariable Long id) {
         Optional<TimeProjectionDTO> entity = timeService.findById(id);
         entity.ifPresentOrElse(
                 e -> timeService.deleteEntity(id),
@@ -48,7 +48,7 @@ public class TimeController {
                     throw new RuntimeException("Não foi possível encontrar o parâmetro de id: " + id);
                 }
         );
-        return new ResponseEntity<>("Objeto deletado", HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping

@@ -24,14 +24,7 @@
       </div>
 
     </div>
-    <div class="botoes-time">
-      @if (getUsuarioLogado('liderTime') && getUsuarioLogado('timeId') === id) {
-        <p-button severity="danger" (click)="excluirTime()">Excluir Time</p-button>
-      }
-      @if (getUsuarioLogado('timeId') === id && jogadores.length > 1) {
-        <p-button severity="danger" [outlined]="true" (click)="sairTime()">Sair do Time</p-button>
-      }
-    </div>
+
   </ng-template>
 
   <ng-template pTemplate>
@@ -68,7 +61,7 @@
               }
             </div>
           </div>
-          @if (getUsuarioLogado('liderTime') && getUsuarioLogado('timeId') === id) {
+          @if (liderTimeJogador && timeIdJogador === id) {
             <div class="actions">
               @if (!jogador.liderTime) {
                 <p-button severity="success" class="follow-btn" [rounded]="true" icon="pi pi-angle-double-up"
@@ -89,3 +82,11 @@
     </div>
   </ng-template>
 </p-splitter>
+<div class="botoes-time">
+  @if (liderTimeJogador && timeIdJogador === id) {
+    <p-button severity="danger" (click)="excluirTime()">Excluir Time</p-button>
+  }
+  @if (timeIdJogador === id && jogadores.length > 1) {
+    <p-button severity="danger" [outlined]="true" (click)="sairTime()">Sair do Time</p-button>
+  }
+</div>
